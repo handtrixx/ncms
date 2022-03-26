@@ -1,0 +1,65 @@
+<!-- html head from head.html snipppet -->
+
+<body>
+
+    <!-- Top Navigation from navbar.html snipppet -->
+
+    <!-- Main Content-->
+    <main>
+        <!-- Section Content-->
+        <section id="content">
+            <div class="container-lg" >
+                <div class="row pt-4 ">
+                    <div class="col-12 mt-5 pt-5 text-center">
+                        <h1 class="c-white langkey" id="search_headline">
+                            Suchen & Finden
+                        </h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-2"></div>
+                    <div class="col-12 col-md-8 py-5 text-center">
+                        <div class="input-group input-group-lg mb-3">
+                            <input id="searchInput" type="text" class="form-control" placeholder="" aria-label="Search Term" aria-describedby="button-search">
+                            <button onclick="search()" class="btn btn-outline-primary" type="button" id="button-search">Start!</button>
+                          </div>
+                    </div>
+                    <div class="col-12 col-md-2"></div>
+                   
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12 col-md-2"></div>
+                    <div class="col-12 col-md-8">
+                        <ol id="searchrresults" class="list-group list-group-numbered">
+                          
+                           
+                          </ol>
+                    </div>
+                    <div class="col-12 col-md-2"></div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <!-- footer navigation from footer.html snipppet -->
+
+    </main>
+
+
+    <!-- Javascript from script.html snipppet -->
+   
+<script>
+var input = document.getElementById("searchInput");
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    document.getElementById("button-search").click();
+  }
+});
+
+</script>
+</body>
+
+</html>

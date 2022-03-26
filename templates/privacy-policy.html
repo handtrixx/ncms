@@ -1,0 +1,71 @@
+<!-- html head from head.html snipppet -->
+
+<body data-bs-spy="scroll" data-bs-target="#postspy" data-bs-offset="100" tabindex="0">
+
+    <!-- Top Navigation from navbar.html snipppet -->
+
+    <!-- Main Content-->
+    <main>
+        <!-- Section Content-->
+        <section id="content">
+            <div class="container-lg">
+                <div class="row mb-2">
+                    <div class="col-12 my-2 mt-xl-4 d-grid d-md-block">
+                        <a class="btn btn-outline-primary" href="/blog.html" role="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                              </svg>
+                            <span id="post_back" class="langkey">Zurück</span>
+                        </a>
+                    </div>
+
+
+
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-8 col-xl-8 order-2 order-md-1 py-2 mb-4">
+                        <div class="postcontent p-3">
+                            <!-- mardown content from privacy.md -->
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-12 col-md-4 col-xl4 order-1 order-md-2 mb-2">
+                        <div class="container-fluid px-0 h-100">
+                            <div class="row sticky-top">
+                                <div class="col-12 col-sm-6 col-md-12">
+                                    <nav id="postspy" class="flex-column align-items-stretch py-2 my-2">
+                                        <h5 class="ps-3 langkey" id="post_content">Inhalt</h5>
+                                        <nav id="spylinks" class="nav flex-column">
+                                        </nav>
+                                    </nav>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- footer navigation from footer.html snipppet -->
+
+    </main>
+
+
+    <!-- Javascript from script.html snipppet -->
+
+    <!-- Scrollspy Generation and Syntax Highlighting -->
+    <script>
+        postspy();
+    </script>
+
+
+</body>
+
+</html>

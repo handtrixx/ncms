@@ -1,0 +1,187 @@
+[
+{
+    "id":"nav-blog",
+    "deval":"PROJEKTE & BLOG",
+    "enval":"PROJECTS & BLOG"
+},
+{
+    "id":"nav-home",
+    "deval":"ÜBER MICH",
+    "enval":"ABOUT ME"
+},
+{
+    "id":"nav-footer-home",
+    "deval":"ÜBER MICH",
+    "enval":"ABOUT ME"
+},
+{
+    "id":"nav-footer-blog",
+    "deval":"PROJEKTE & BLOG",
+    "enval":"PROJECTS & BLOG"
+},
+{
+    "id":"nav-footer-imprint",
+    "deval":"IMPRESSUM",
+    "enval":"IMPRINT"
+},
+{
+    "id":"nav-footer-privacy",
+    "deval":"DATENSCHUTZ",
+    "enval":"DATA PRIVACY"
+},
+{
+    "id":"index_projectsblog",
+    "deval":"Projekte & Blog",
+    "enval":"Projects & Blog"
+},
+{
+    "id":"index_more",
+    "deval":"Mehr über mich",
+    "enval":"More about me"
+},
+{
+    "id":"index_career",
+    "deval":"Karrierepfad",
+    "enval":"Career Path"
+},
+{
+    "id":"index_0821today",
+    "deval":"August 2021 bis heute",
+    "enval":"August 2021 until today"
+},
+{
+    "id":"index_0821today_content",
+    "deval":"meine aufgabe",
+    "enval":"As person in charge of B. Braun eBusiness on corporate level, my tasks are to build-up, improve, coordinate and harmonize eBusiness related processes and activities. International networking with members of the B. Braun Group as well as external stakeholders/people is another core activity to me.Im always interested in exchange and sharing expertise about the topics Online Shops, Market Places, APIs/Webservices, OCR and EDI on high-level and to create a link to the Process Experts in our eBusiness team."
+},
+{
+    "id":"index_0821today_content",
+    "deval":"meine aufgabe",
+    "enval":"As person in charge of B. Braun eBusiness on corporate level, my tasks are to build-up, improve, coordinate and harmonize eBusiness related processes and activities. International networking with members of the B. Braun Group as well as external stakeholders/people is another core activity to me.Im always interested in exchange and sharing expertise about the topics Online Shops, Market Places, APIs/Webservices, OCR and EDI on high-level and to create a link to the Process Experts in our eBusiness team."
+},
+{
+    "id":"index_01190821",
+    "deval":"Januar 2019 bis August 2021",
+    "enval":"January 2019 until August 2021"
+},
+{
+    "id":"index_01190821_content",
+    "deval":"Hinter der etwas sperrigen Berufsbezeichnung liegt die Ambition, im Unternehmen Mitarbeitern auf der ganzen Welt dabei zu helfen digitale Vertriebskanäle aufzubauen. Meine Unterstützung hierbei ist die Begleitung und Beratung auf der kompletten Reise von der Idee, bis zum erfolgreichem Vertrieb. Die internationale Zusammenarbeit mit unterschiedlichsten Menschen und Professionen, bereiten mir dabei jeden Tag aufs neue unglaubliche Freude. Meine Alltagswerkzeuge sind dabei MS Teams, der Browser, Power Point, Wikis, Visual Studio Code und natürlich das Telefon.",
+    "enval":"text"
+},
+{
+    "id":"index_08161218",
+    "deval":"August 2016 bis Dezember 2018",
+    "enval":"August 2016 until December 2018"
+},
+{
+    "id":"index_08161218_content",
+    "deval":"Hinter der etwas sperrigen Berufsbezeichnung liegt die Ambition, im Unternehmen Mitarbeitern auf der ganzen Welt dabei zu helfen digitale Vertriebskanäle aufzubauen. Meine Unterstützung hierbei ist die Begleitung und Beratung auf der kompletten Reise von der Idee, bis zum erfolgreichem Vertrieb. Die internationale Zusammenarbeit mit unterschiedlichsten Menschen und Professionen, bereiten mir dabei jeden Tag aufs neue unglaubliche Freude. Meine Alltagswerkzeuge sind dabei MS Teams, der Browser, Power Point, Wikis, Visual Studio Code und natürlich das Telefon.",
+    "enval":"text"
+},
+{
+    "id":"index_08140916",
+    "deval":"August 2014 bis September 2016",
+    "enval":"August 2014 until September 2016"
+},
+{
+    "id":"index_08140916_content",
+    "deval":"Die Architektur eines Unternehmens ist heutzutage immer auch von digitalen Prozessen und Komponenten abhängig. Einige der Aufgaben eines Enterprise Architects sind, Transparenz zu schaffen, Abläufe zu optimieren und komplexe Zusammenhänge verständlich darzustellen. Durch das aufbrechen einzelner Silos lernt man nicht nur viel über Sinn und Zweck der verschiedenen Bereiche, sondern man erkennt auch potentiale die eindeutig zur Verbesserung beitragen können.",
+    "enval":"text"
+},
+{
+    "id":"index_07080714",
+    "deval":"Juli 2008 bis Juli 2014",
+    "enval":"July 2008 until July 2014"
+},
+{
+    "id":"index_07080714_content",
+    "deval":"Mit Datenbanken hatte ich bis 2008 wenig zu tun. Meinen damaligen Kollegen und Vorgesetzten habe ich es zu verdanken, dass sie in mir, dem Auszubildenden, das Talent gesehen haben diese verantwortungsvolle Aufgabe zu übernehmen. Ich bin mir sicher, sie nicht entäuscht zu haben. Während dieser sechs Jahre, habe ich zum Einen dabei unterstützt die Oracle basierten Datenbanken, welche u.a. von den SAP Systemen des Unternehmens genutzt wurden zu betreiben und zu optimieren. Der andere Teil war aber fast noch spannender; die Einführung und Standardisierung von MS SQL Server Datenbanken, für die 'nicht ganz so wichtigen' Anwendungen. Das betraff 2008 noch weniger als 20 Datenbanken / Applikationen und wurde 2014 von mir als eine Systemlandschaft von über 1.000 Datenbanken an die Kollegen übergeben. Ein hoher grad von Standardisierung und Virtualisierung, war eines der Mittel wie das gelingen konnte. Gegen Ende dieses Abschnitts vermehrten sich außerdem zusätzliche fachfremde Projekte und Tätigkeiten, wie z.B. die Projektleitung zur Einführung von Linux als eines der Standardbetriebsysteme in unseren Rechenzentren.",
+    "enval":"text"
+},
+{
+    "id":"index_education",
+    "deval":"Bildungsweg",
+    "enval":"Education"
+},
+{
+    "id":"index_09120813",
+    "deval":"September 2012 bis August 2013",
+    "enval":"September 2012 until August 2013"
+},
+{
+    "id":"index_09110812",
+    "deval":"September 2011 bis August 2012",
+    "enval":"September 2011 until August 2012"
+},
+{
+    "id":"index_09090811",
+    "deval":"September 2009 bis August 2011",
+    "enval":"September 2009 until August 2011"
+},
+{
+    "id":"index_07050708",
+    "deval":"Juli 2005 bis Juli 2008",
+    "enval":"July 2005 until July 2008"
+},
+{
+    "id":"index_08020704",
+    "deval":"August 2002 bis Juli 2004",
+    "enval":"August 2002 until July 2004"
+},
+{
+    "id":"index_contact",
+    "deval":"Kontakt",
+    "enval":"Contact"
+},
+{
+    "id":"404",
+    "deval":"404",
+    "enval":"404"
+},
+{
+    "id":"404_content",
+    "deval":"Ups, da hat etwas nicht geklappt, die gewünschte Seite ist entweder nicht vefügbar oder noch ncicht in Deine Sprache übersetzt worden.",
+    "enval":"Ups, something went wrong. Page does either not exist or has not been translated to your language, yet."
+},
+{
+    "id":"404_links",
+    "deval":"Wenn du einen bestimmten Inhalt finden möchtest, probier doch gerne mal <a href='/search.html'>die Volltextsuche hier</a> aus.",
+    "enval":"If you are searching for specific content, feel free to us the <a href='/search.html'>the full-text search here</a>."
+},
+{
+    "id":"search_headline",
+    "deval":"Suchen & Finden",
+    "enval":"Search & Find"
+},
+{
+    "id":"button-search",
+    "deval":"Los!",
+    "enval":"Go!"
+},
+{
+    "id":"search_notfound",
+    "deval":"Nicht gefunden",
+    "enval":"Not found"
+},
+{
+    "id":"button-search",
+    "deval":"Kein Suchtreffer gefunden",
+    "enval":"There is no match for your search term."
+},
+{
+    "id":"share-text",
+    "deval":"Teilen",
+    "enval":"Share"
+},
+{
+    "id":"post_back",
+    "deval":"Zurück",
+    "enval":"Back"
+},
+{
+    "id":"post_content",
+    "deval":"Inhalt",
+    "enval":"Content"
+}
+]
