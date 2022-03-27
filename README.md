@@ -1,6 +1,6 @@
 # NCMS - Niklas Stephan's Content Managment System
 
-Digital Business Card and Blog of Niklas Stephan. Source files for templates.
+The flat-file and node-red based WCMS created for Niklas Stephan's Website. 
 
 LINK: https://niklas-stephan.de
 
