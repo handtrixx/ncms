@@ -21,5 +21,3 @@ mkdir /dist/posts
 cp -R /src/assets/ /dist
 cp /src/templates/robots.txt /dist/robots.txt
 
-# copy current flows from node-red to src
-cp -R /data/flows.json /dist/assets/json/flows.json

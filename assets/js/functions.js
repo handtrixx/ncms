@@ -54,8 +54,6 @@ function activeNav() {
     }
 }
 
-
-
 function welcome() {
     let textStyle = [
        "color: #fff",
@@ -81,38 +79,7 @@ function welcome() {
 ##    ##   ######   ##     ##   ######  
 `, picStyle);
  
-    console.log("%c Version: 0.33", textStyle);
-    console.log ("Implemented Features:")
-    console.log("- comments support via self hosted remark42, remove disqus");
-    console.log("- comments support via Disqus integration");
-    console.log("- Final Post Layout");
-    console.log("- SEO and page meta integration");
-    console.log("- favicon");
-    console.log("- full-text search with local index")
-    console.log("- import of posts in markdown and static page generation");
-    console.log("- Multilanguage support for static pages");
-    console.log("- Matomo WebAnalytics integration")
-    console.log("- WebHook to start Page Deployment")
-    console.log("- Simple Media Manager")
-    console.log("- No/Remove any usage of any JS Framework")
-    console.log("- Nerdish Console Log output")
-    console.log("- 404 Error handling")
-    console.log("- Filter unpublished Posts in Backend")
-    console.log("- Blog page with Isotope filters and masonry Look")
-    console.log("- Dynamic sitemap.xml and robots.txt by compilation")
-    console.log("- Bash script for stable file system based operations")
-    console.log("- Keep each static page < 1.44MB = Floppy Fit")
-    console.log("- Automatic Scrollspy in Posts")
-    console.log("- More Nice Background Colors");
-    console.log("- More Translations");
-    console.log("- unify backend")
-    console.log("-------------------");
-    console.log("Todo List:")
-    console.log("- versioning via github integration")
-    console.log("- cookie madness")
-    console.log("- optional web backend")
-    console.log("- Advanced Media Manager with resizes") 
-   
+    console.log("%c Version: 0.35", textStyle);
  }
 
 function setlang() {
