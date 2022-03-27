@@ -85,22 +85,43 @@ body {
     background: var(--nc-theme) !important;
 }
 
+
+@keyframes MOVE-BG {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+@keyframes diagonal {
+    0% {background-position: 0% 50%}
+    100% {background-position: 100% 50%}
+}
+
 #intro {
     background: linear-gradient(to right bottom, #151474, #151474, #d00000);
     color: var(--bs-gray-200);
-
     min-height: calc(100vh - 106px);
+
+    background-size: 200%;
+    animation-name: diagonal;
+	animation-duration: 5s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+    animation-direction: alternate;
+
 }
+
 
 #cv {
     background-color: var(--nc-theme);
     position: relative;
+    overflow:hidden;
 }
 
 #cv::after {
     content: "";
     background: url("../img/career.webp");
-    background-repeat: no-repeat;
+    background-repeat: repeat-x;
+    width:200%;
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -110,9 +131,10 @@ body {
     bottom: 0px;
     left: 0px;
     opacity: 0.2;
-    /*
-    filter: opacity(0.5);
-    */
+    animation-name: MOVE-BG;
+	animation-duration: 100s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
 }
 
 #cvcontent {
@@ -122,13 +144,15 @@ body {
 #education {
     background-color: #074901;
     position: relative;
+    overflow:hidden;
 
 }
 
 #education::before {
     content: "";
     background: url("../img/education.webp");
-    background-repeat: no-repeat;
+    background-repeat: repeat-x;
+    width:200%;
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -138,9 +162,11 @@ body {
     bottom: 0px;
     left: 0px;
     opacity: 0.2;
-    /*
-    filter: opacity(0.5);
-    */
+    animation-name: MOVE-BG;
+	animation-duration: 100s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+    animation-direction: reverse;
 
 }
 
