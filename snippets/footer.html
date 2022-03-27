@@ -1,3 +1,23 @@
+<div class="position-fixed bottom-0 start-0 p-3" style="z-index: 11000">
+    <div id="gdprToast" class="toast bg-theme" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+      <div class="toast-header">
+        <strong class="me-auto langkey" id="gdpr_head">Datenschutz</strong>
+      </div>
+      <div class="toast-body">
+        <span id="gdpr_body" class="langkey">
+        Besuchen Sie niklas-stephan.de in dem Sie einer zur fehlerfreien Funktion erforderlichen Auswahl an Cookies 
+        und einem anonymisierten Tracking zustimmen. 
+        Mehr dazu finden Sie im Bereich <a href="/privacy-policy.html" >Datenschutz</a>.
+        </span>
+        <div class="mt-2 pt-2 d-grid">
+            <button type="button" onclick="gdpr_cookie()" class="btn btn-outline-primary" data-bs-dismiss="toast">
+                <span id="gdpr_confirm" class="langkey">Zustimmen</span>
+            </button>
+        </div>
+    </div>
+    </div>
+</div>
+
 <footer>
     <div class="container text-center py-5">
         <div class="row pb-5">
@@ -9,7 +29,7 @@
                     Projekte & Blog
                 </a> | 
                 <a class="mx-2 footer-link langkey" href="/privacy-policy.html" id="nav-footer-privacy">
-                    Datenschutz
+                    Datenschutz & Impressum
                 </a>
                
             </div>

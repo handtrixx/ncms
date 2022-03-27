@@ -59,8 +59,7 @@ function welcome() {
        "color: #fff",
        //"background-color: red",
        "padding: 2px 4px",
-       "border-radius: 2px",
-       "font-size: large"
+       "border-radius: 2px"
     ].join(';');
     let picStyle = [
        "font-family:monospace",
@@ -79,7 +78,7 @@ function welcome() {
 ##    ##   ######   ##     ##   ######  
 `, picStyle);
  
-    console.log("%c Version: 0.35", textStyle);
+    console.log("%c https://github.com/handtrixx/ncms", textStyle);
  }
 
 function setlang() {
@@ -298,3 +297,22 @@ function socialShare(value) {
     targetUrl = sharerUrl+currentUrl;
     window.open(targetUrl,'_blank');
  }
+
+ function gdpr_dialogue() {
+    var toast = new bootstrap.Toast(gdprToast);
+    var cookie = getCookie("gdpr");
+
+    if (cookie == "") {
+        toast.show();
+    }
+    
+ }
+
+ function gdpr_cookie() {
+  document.cookie = "gdpr=yes; path=/";
+}
+
+
+
+   
+

@@ -26,8 +26,8 @@
 },
 {
     "id":"nav-footer-privacy",
-    "deval":"DATENSCHUTZ",
-    "enval":"DATA PRIVACY"
+    "deval":"DATENSCHUTZ & IMPRESSUM",
+    "enval":"DATA PRIVACY & IMPRINT"
 },
 {
     "id":"index_projectsblog",
@@ -183,5 +183,20 @@
     "id":"post_content",
     "deval":"Inhalt",
     "enval":"Content"
+},
+{
+    "id":"gdpr_head",
+    "deval":"Datenschutz",
+    "enval":"Data Privacy"
+},
+{
+    "id":"gdpr_body",
+    "deval":"Besuchen Sie niklas-stephan.de in dem Sie einer zur fehlerfreien Funktion erforderlichen Auswahl an Cookies und einem anonymisierten Tracking zustimmen. Mehr dazu finden Sie im Bereich <a href='/privacy-policy.html'>Datenschutz</a>.",
+    "enval":"Continue on niklas-stephan.de by confirming the usage of cookies required for basic operations and anonymized Tracking. More info at area <a href='/privacy-policy.html'>Data Privacy</a>."
+},
+{
+    "id":"gdpr_confirm",
+    "deval":"Zustimmen",
+    "enval":"Confirm"
 }
 ]
