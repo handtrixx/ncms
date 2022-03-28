@@ -5,9 +5,11 @@ The flat-file and node-red based WCMS created for Niklas Stephan's Website.
 LINK: https://niklas-stephan.de
 
 # Version
-Version 0.37
+Version 0.39
 
 # Features
+- Automatic Link generation for images in posts
+- animated backgrounds on index page
 - GDPR Cookie & tracking mgmt.
 - Source Code versioning via github integration
 - comments support via self hosted remark42, remove disqus

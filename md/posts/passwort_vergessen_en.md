@@ -1,18 +1,19 @@
 ---
 {
-"title": "Passwort vergessen in Windows 10? (Fast) kein Problem!",
-"filename": "passwort_vergessen.md",
+"title": "System Password Lost? (Nearly) no Problem on Windows!",
+"filename": "passwort_vergessen_en.md",
 "imgurl":"finger.png",
 "keywords": ["MacPC"],
-"language": "de",
+"language": "en",
 "date":"2022-01-06",
 "published":true,
-"excerpt":"Heute beschreibe ich in Kürze, wie man ein lokales Administratorkonto auch in der aktuellsten Windows 10 Version zurücksetzen kann."
+"excerpt":"If you ever lost your Win 10 admin password or just wondering what you could do in that case, spend 7 minutes for this post."
 }
 ---
-## Vorwort
-In einer besonders unglücklichen Situation bin ich kürzlich von einem Freund kontaktiert worden: Er hat sein Windows 10 Anmeldepasswort unwiederbringlich vergessen.
-Also auf zu Google und siehe da; es gibt unzählige Lösungsvorschläge um ein Win10 Passwort zurückzusetzen. Dann aber die Ernüchterung: Microsoft hat schon nachgebessert und alle Tricks, die ich gefunden habe, funktionieren leider nicht mehr. Was nun?
+It could have happend to myself: an old friend contacted me if I maybe could help him out, since he has forgotten his computers user password. 
+My first thought was, as usual, you can not be the only one who ever faced this challenge. And, no wonder, yes there are plenty of search results containing hints how to reset a lost Windows 10 password.
+
+But then, after trying some of the tutorials I figured out that many of the hints have been already identified as security issues by Microsoft and just have been fixed. Others basically just did not work at all. So what's next?
 
 Zeit für Eigeninitative :-) In dieser Anleitung beschreibe ich in Kürze, wie man ein Administratorkonto, auch in der aktuellsten Windows 10 Version, zurücksetzen kann.
 

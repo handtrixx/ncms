@@ -69,17 +69,15 @@ html {
 
 body {
     max-width: 100vw !important;
-    /*
-    overflow-x: hidden;
-    */
+
     touch-action: pan-x pan-y;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /*
-    -ms-overflow-style: none;
-    */
+
     background-color: var(--bs-gray-900);
 }
+
+
 
 .navbar-dark {
     background: var(--nc-theme) !important;
@@ -183,6 +181,13 @@ body {
     background-attachment: fixed;
     background-position: center;
 
+    background-size: 200%;
+    animation-name: diagonal;
+	animation-duration: 5s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+    animation-direction: alternate;
+
 }
 
 #nsdeimg {
@@ -215,8 +220,17 @@ body {
     word-break: break-word;
 }
 
-.postcontent>p {
+.postcontent p {
     text-align: left;
+}
+
+.postcontent img {
+    max-width: 100%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    cursor: pointer;
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
@@ -788,12 +802,16 @@ footer {
 
     #introcontent {
         background-image: url("../img/me_logo.webp");
-        height: 90vh;
+        height: calc(100vh - 106px);
         background-size: contain;
         background-repeat: no-repeat;
         background-position-y: bottom;
         background-position-x: right;
 
+    }
+    .postimagewrapper {
+        max-height: 300px;
+        overflow-y: clip;
     }
 }
 
@@ -803,10 +821,5 @@ footer {
         position: absolute;
         bottom: 25vh;
     }
-}
-@media (min-width: 1400px) {
-    #teaserbuttons {
-        position: absolute;
-        bottom: 50vh;
-    }
+    
 }

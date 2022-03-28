@@ -308,9 +308,10 @@ function socialShare(value) {
     
  }
 
- function gdpr_cookie() {
+function gdpr_cookie() {
   document.cookie = "gdpr=yes; path=/";
 }
+
 
 
 
