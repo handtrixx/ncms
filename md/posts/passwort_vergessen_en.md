@@ -1,6 +1,6 @@
 ---
 {
-"title": "System Password Lost? (Nearly) no Problem on Windows!",
+"title": "System Password Lost? (Nearly) no problem on Windows!",
 "filename": "passwort_vergessen_en.md",
 "imgurl":"finger.png",
 "keywords": ["MacPC"],
@@ -15,111 +15,104 @@ My first thought was, as usual, you can not be the only one who ever faced this 
 
 But then, after trying some of the tutorials I figured out that many of the hints have been already identified as security issues by Microsoft and just have been fixed. Others basically just did not work at all. So what's next?
 
-Zeit für Eigeninitative :-) In dieser Anleitung beschreibe ich in Kürze, wie man ein Administratorkonto, auch in der aktuellsten Windows 10 Version, zurücksetzen kann.
+Time to get the hands dirty :-) This posts describes how you can reset the admin password in the most current (2022-01-06) version of Windows 10.
 
-So viel im Voraus: Microsoft muss hier weiter nachbessern, denn die beschriebene Methode kann dazu genutzt werden administrativen Zugriff auf jegliche Win10 PCs zu erlangen. Einzige Vorraussetzung ist der physische Zugriff auf den Rechner.
+Only thing required: Internet access from another pc and physical access to the affected computer.
 
+## Perparation
 
-## Vorbereitung
-
-Mein Freund hat mir den betroffenen Computer vorbeigebracht, also hatte ich direkten Zugriff auf den Rechner.
-Das Benutzerkonto auf das er nicht mehr zugreifen konnte, war ein lokales Konto.
-
-Hinweis: Für ein Benutzerkonto, dass mit der Microsoft Cloud verknüpft ist, funktioniert diese Anleitung nur teilweise - Dort ist das zürücksetzen des Passworts aber auch kein Problem und kann von einem anderen Endgerät aus, Online erledigt werden.
+My friend just brought the affected pc to me, so I could take my time to work on the issue. Bad and good news was: The locked account was a local acccount, which means he could not utilize Micorosofts standard procedure for password reset but opened the gate for the dirty tricks described within the article.
 
 ![Win10Download](/media/passwort_vergessen/win10down.jpeg)
 
-Außerdem habe ich mir ein Windows 10 Installationsmedium auf einem USB-Stick erzeugt, weil ich während der ersten Recherechen darauf gestoßen bin, dass das erforderlich ist. Den offiziellen Windows 10 Download findet man unter in den Quellen am Ende des Artikels. Zum erstellen des Sticks brauchen wir natürlich irgendwo einen zweiten Rechner auf den wir Zugriff haben. Die heruntergeladene ISO Datei lässt sich je nach Betriebssystem unterschiedlich auf den Stick bringen. Google hilft.
+In advance I already created a Win 10 installation media on an USB-stick, since most tutorials recommended to do so.
+The official source for download at Microsoft is linked at the end of the article, and totally legal to use.
+There are plenty of desriptions how to setup a USB-stick for Windows installation on the net, so I will not desribe that here.
 
-## Vorgehensweise
+## Procedure
 
-Folgende Schritt-für-Schritt Anleitung umreißt die als funktionierend gestestete Vorgehensweise um das Passwort eines lokalen Windows 10 Benutzers zurückzusetzen.
+Following procedure helped me to reset the password, it can slightly differ for you, depending on your environment.
 
-
-
-1. Zunächst booten wir von unserem zuvor erzeugten Bootstick.
+1. First thing is to boot the affected pc from the newly created installation media.
 ![01_boot_img](/media/passwort_vergessen/01_boot_img.jpeg)
 
-2. Im ersten Dialogfenster der Sprachauswahl etc. drücken wir gleichzeitig die SHIFT + F10 Tasten.
+2. When arrived at the dialogue for chosing the language, instead of doing so we press `SHIFT`+`F10` keys simultaniosly.
 ![02_boot_shift](/media/passwort_vergessen/02_boot_shift.jpeg)
 
-3. In der daraufhin erscheinenden Kommandozeile (oha; dass dürfte doch eigentlich gar nicht funktionieren), wechseln wir auf die Partition unserer lokalen Windows 10 Installation, also z.B. mit den Befehl "C:".
+3. Now, a command line appears (weird that it does). The we change to our system drive, e.g. by entering `C:`.
 
-4. Nun "hangeln" wir uns ins lokale Systemverzeichnis. Das geht z.B. mit den Befehlen: "cd Windows" Enter Taste, dann "cd system32" Enter Taste.
+4. Here we have to navigate to our system directory, in most cases by `cd Windows`, `ENTER` and then `cd system32`, `ENTER`.
 
-5. Jetzt erstellen wir unser "magisches Tor" um später, beim normalen Hochfahren, ebenfalls in die Kommandozeile wechseln zu können. Mit "cp utilman.exe utilman_old.exe" sichern wir zunächst den Eingabehilfeassistenten um ihn später wiederherstellen zu können.
+5. Some more DOS commands follow: `cp utilman.exe utilman_old.exe` creates a backup to be able to reverse our small "hack" later on.
 
-6. Mit "copy cmd.exe utilman.exe" erzeugen wir eine Kopie des Kommandzeilenprogramms unter dem Namen des Eingabehilfeassistenten.
+6. `copy cmd.exe utilman.exe` overwrites the utilman executable we backed up before with a copy of the command line tool.
 
-7. Das war der erste Streich. Wir können nun die Windows Installationsroutine schließen und den Rechner wieder normal hochfahren.
+7. Basically that waas the part we can call a small "hack", we will rely on in the next steps. The PC has to be rebooted without the instalalation media, now.
 
-8. Wir müssen am Anmeldebildschirm einen erneuten Reboot im abgesicherten Modus herbeiführen, da zumindest mir, sonst Aufrufe der Kommandozeile blockiert wurden (vermutlich vom im Hintergrund laufenden Systemschutz-Program...). Also die "SHIFT" Taste gedrückt halten, unten Rechts auf das Powersymbol drücken und Neustart auswählen.
+8. At least in the latest versions of Win 10 (or better of the windows defender tool) Microsoft blocks any direct call to the command line, so we have to reboot again in safe mod to bypass this, too. If you don't use defender, you maybe can ignore this step. To reboot in safe mode: keep the `SHIFT` key pressed and click on bottom right power icon and select "reboot".
 ![07_down](/media/passwort_vergessen/07_down.jpeg)
 
-9. Im nach kurzer Zeit erscheinenden Zwischendialog wählen wir "Advanced Options" bzw. "Erweiterte Optionen", und dann "Startup Settings" bzw. "Starteinstellungen". Nun auf "Restart" bzw. "Neustart" klicken. (Sorry, habe gerade nur Englische Screenshots)
+9. After some seconds a selection screen appears, where you can choose "Advanced Options" and then "Startup Settings". Now you finally can click "Restart".
 ![08_troubleshoot](/media/passwort_vergessen/08_troubleshoot.jpeg)
 
-10. Sobald der Rechner wieder oben ist, drücken wir die Taste 6 um den abgesicherten Modus mit Kommandzeile zu starten.
+10. Once the machine is up again, press key `6` to continue boot in safe mode.
 ![08_troubleshoot](/media/passwort_vergessen/08_troubleshoot.jpeg)
 
 ![09_advanced](/media/passwort_vergessen/09_advanced.jpeg)
 
-11. Leider startet sich die Kommandozeile nicht direkt, da wir zunächst unser Passwort eingeben sollen (haha), aber unser Trick den wir durch Schritt 6 ermöglicht haben, kann nun ausgeführt werden: Wir klicken auf das Symbol für die Eingabehilfe (das zweite Symbol rechts unten) und Voilà: Die Kommandozeile öffnet sich, und dieses mal mit vollen Berechtigungen!
+11. Don't worry that you are prompted to key in your password again. Let the magic start and click on the "Ease of Access" button (the second icon bottom right). Instead of the "Ease of Access" tool, the command line will open and you have full administrative persmissions on your pc, WITHOUT knowing the password.
 ![10_startup](/media/passwort_vergessen/10_startup.jpeg)
 
 ![11_startup_settings](/media/passwort_vergessen/11_startup_settings.jpeg)
 
-12. Durch Eingabe des Befehls "net user", bekommen wir eine Liste aller lokalen Benutzerkonten angzeigt. Da fehlt mir anscheinend das Know-How, aber das Benutzerkonto um das es mir eigentlich geht, wird gar nicht angzeigt?! Macht nichts: Wir reaktivieren einfach das vorhandene "Administrator" Benutzerkonto und arbeiten mit diesem weiter. Wie? nächster Schritt:
+12. To reset the locked password a few more commands have to follow, now: `net user` will show us all currently existing user accounts on the pc. In my case the account I wanted to reset, was not shown here. Maybe a gap of knowledge on my own, but anyhow I saw the "Administrator" user. So I changed my plan slightly and reactived that account (it's deactivated in a default installation), to use it login to Windows and the reset my targets user password via the graphical interface of Windows. To reactivate the "Administrator" account, see the next step.
 ![12_netuser](/media/passwort_vergessen/12_netuser.jpeg)
 
-13. Der Befehl "net user Administrator /active:yes" aktiviert das Konto und der Befehl "net user Administrator PASSWORD" setzt das Passwort PASSWORD für diesen. (mit angepassten Befehlen lässt sich so natürlich auch ein komplett neuer User als Admin einrichten, falls der User "Administrator" nicht verfügbar ist.)
+13. Command `net user Administrator /active:yes` will do the reactivation for us. Another  `net user Administrator PASSWORD` sets the password to "PASSWORD". If you have issues to find your original user and also not able to reactivate the Administrator account, the net user ... commands also would allow you to create a new user.
 ![13_cmd](/media/passwort_vergessen/13_cmd.jpeg)
 
-14. Weil es so schön ist: Zeit für einen Reboot
+14. Time for another reboot.
 
-15. Im Anmeldebildschirm unten links sehen wir nun mehrere Benutzer zur Auswahl, und eben auch den "Administrator" den wir soeben aktiviert haben. Auf diesen klicken wir jetzt und melden uns dann als dieser User am System, mit dem zuvor gestetzten Passwort, an.
+15. This time at the login screen we see at least more than one user to select from on the bottom left side. For sure we choose the "Administrator" user, since we know that password for that one from two steps before.
 
-16. Nachdem wir die Windows "Ersteinrichtungshölle" hinter uns gelassen haben, sehen wir jetzt einen mehr oder weniger augeräumten Desktop und haben uns erfolgreich mit Adminstratorberechtigungen angemeldet!
+16. Some steps later in the Win guy we will see a mostly clean desktop and are logged in successfully.
 
-17. Jetzt können wir über die Systemsteuerung -> Benutzer -> Andere Konten das Passwort unseres eigentlichen Benutzer komfortabel ändern und ja; den PC neu starten.
+17. We open the Control Panel and navigate to -> Users --> Other Accounts where we are finally able to reset the password of our locked user. 
 
-18. Fertig: Jetzt können wir im Anmeldebildschirm von Windows wieder unseren eigentlichen Benutzer auswählen und uns mit dem neu gesetzten Passwort anmelden.
+18. We are done! Time for a last reboot. But this time we can do a login with our normal user again :-)
 
-## Aufräumen
-Unsere gesetzten Spuren machen wir über folgende Befehle in der Windows Kommandozeile wieder rückgängig:
+## Cleanup
 
-- "net user administrator /active:no" - Wir deaktivieren den "Administrator" Benutzer wieder, brauchen wir nun ja nicht mehr.
-- "C:", "cd Windows", "cd system32", "del utilman.exe", "copy utilman_old.exe utilman.exe" - stell die Systedateien wieder auf ihren ursprünglichen Zustand.
+Maybe best to cleanup the mess we created before. We open the command line and execute the following:
+- `net user administrator /active:no`  - to deactive the "Administrator" user.
+- `C:` , `cd Windows` , `cd system32` , `del utilman.exe` , `copy utilman_old.exe utilman.exe` - to restore the utilman executable to it's original state.
 
-## Fazit
-Um dem gestellten Problem von vornherein aus dem Wege zu gehen, könnte man z.B. ein Microsoft Account (wenn man dem Unternehmen traut) erstellen und mit dem Konto verknüpfen. Dann ist das zurücksetzen evtl. Online möglich, insofern der betroffene PC eine Internetverbindung hat.
+## Conclusion
+To avoid to have issues about forgotten win passworrds at all there are plenty of options. One would be to use the Microsoft Online Accounts instead of a local user. It seems Microsoft more and more forces the users of windows to do so anyway, if they like it or not. At least reseting a forgotten password should be easier that way, as long as you have an internet connection...
 
-Auch kann man mit kürzeren PINs arbeiten, die Microsoft seit geraumer Zeit für das Anmelden, neben der weiteren Option eines Erinnerungssatzes, bereitstellt.
+Anyhow, that the described procedure is actually a security risk, not a feature. If you followed the guied, you most likely already recognized that it can be executed on any pc with physical access.
+Other operating system, at least the unix based ones like Linux and MacOS, wouldn't allow similar.
 
-Nichtsdestotrotz (ja, das schreibt sich wohl so): Mit der beschriebenen Vorgehensweise lässt sich nicht nur ein vergessenes Windows Passwort zurücksetzen, sondern auch Zugriff auf jeden Windows 10 PC, auf den physischer Zugriff besteht, beschaffen. Eine eklatante Sicherheitslücke die in anderen Betriebssystemen wie Linux und MacOS besser "gestopft" ist.
+But, at least I was able to help my friend :-)
 
-Naja, meinem Freund konnte ich so jedenfalls helfen :-)
+## Appendix: How can I block such an attack to protect myself and my data?
 
-## Nachtrag: Wie kann ich mich vor so einem "Angriff" schützen?
+Just using the Microsoft Online accounts instead of a local one is not a real fix, since the described procedure also allows us to create new local accounts with administrative permisssions.
 
-Eigentlich dürfte das beschriebene Szenario überhaupt nicht funktionieren, weil sich so jeder administrativen Zugang auf einen Windows PC verschaffen kann.
+In addition you would have to:
+- Set a password at the computers BIOS/UEFI which is requested first thing on your pc's boot before allowing any other action.  
+- Additionally you would have to enable encyrption of your hard disc, e.g. my Micorsoft Bitlocker to avoid attackers from just removing the hard disk and attaching it to a different pc without BIOS/UEFI password.
+Both actions make the user experience slower and less comfortable, so I assume not many people will do so.
 
-Ursache ist eine Verkettung von Umständen, die uns diese Sicherheitslücke öffnet. Um solch einen Angriff zu verhindern reicht es nicht aus, einfach auf ein Micorosoft Online Konto zu wechseln. Es kann sich ja trotzdem jeder über ein neues Benutzerkonto administrativen Systemzugriff verschaffen, sobald sie/er physischen Zugriff auf den Rechner hat.
+Another thing could be done by Microsoft themselves:
+- if they block access to the command line during windows installation. still not secure, since we just could boot e.g. from a WinPE disc.
+- if they would check the signatures of system related files like the command line or utilman to block dirty "hacks" like described in this article. Other operating systems provide similar functionalities, no idea why Micosoft does not.
 
-Einen solchen Angriff zu verhindern ist nicht trivial, denn folgendes müsste in Kombination gemacht werden:
-
-- Setzen eines Passworts auf BIOS Ebene: Verhindert den Start eines anderen Bootmediums und ähnliches. Das werden viele aus Bequemlichkeit nicht machen wollen.
-- Aktivieren der Festplattenverschlüssung, z.B. mit Bitlocker: Sonst könnte man die Festplatte einfach aus dem Rechner herausschrauben/löten und den Inhalt woanders auslesen. Kontra: Das macht den Windows PC (noch) langsamer.
-
-Microsoft selbst könnte wiederum nachbessern indem Sie in Windows:
-- den Zugriff auf die Kommandozeile während der Installationroutine unterbinden. Vermutlich ist das nicht so einfach umzusetzen, da die Kommandozeile hier und da ebenfalls für Spezialfälle benötigt werden könnte.
-- die Signaturen von Systemdateien, die vor dem erfolgreichen Login ausgeführt werden, prüfen. Das sollte sich auf jeden Fall umsetzen lassen und es ist verwunderlich das Microsoft das nicht schon lange tut. Unter Linux gibt es dafür schon seit Jahren Implementierungen wie z.B. SELinux.
-
-## Quellen
-- https://adamtheautomator.com/reset-windows-10-password-command-prompt/ - funktionierte nicht, aber nützliche Tipps zum Prozessversändnis
-- https://www.avast.com/c-recover-windows-password#gref - funktionierte nicht, aber ebenso nützliche Tipps zum Prozessversändnis
-- https://www.makeuseof.com/tag/3-ways-to-reset-the-forgotten-windows-administrator-password/ - funktionierte auch nicht, noch mehr nützliche Tipps zum Prozessversändnis
-- https://www.sony.com/electronics/support/articles/00123047 - wie man einen deaktivierten Windows Account aus der Kommandzeile heraus aktiviert
-- https://www.microsoft.com/en-us/software-download/windows10ISO - Windows 10 ISO Download
+## Sources
+- https://adamtheautomator.com/reset-windows-10-password-command-prompt/ 
+- https://www.avast.com/c-recover-windows-password#gref 
+- https://www.makeuseof.com/tag/3-ways-to-reset-the-forgotten-windows-administrator-password/ 
+- https://www.sony.com/electronics/support/articles/00123047 
+- https://www.microsoft.com/en-us/software-download/windows10ISO
 
 

@@ -190,6 +190,10 @@ body {
 
 }
 
+#contact a {
+    text-decoration: none;
+}
+
 #nsdeimg {
     -webkit-filter: contrast(1.5);
     filter: contrast(1.5);
@@ -231,6 +235,18 @@ body {
     margin-right: auto;
     display: block;
     cursor: pointer;
+}
+
+code {
+    background: var(--bs-gray-900);
+    color: var(--bs-gray-200);
+    margin-left: 3px;
+    margin-right: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-family: monospace;
+    font-size: 1rem;
+    border: 2px solid var(--bs-gray-900);
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {

@@ -9,6 +9,7 @@
 ### /src and /dist are mapped volumes
 
 # remove all current assets from dist, since we will get new ones
+rm -R /dist/media/
 rm -R /dist/assets/
 rm -R /dist/posts/
 rm /dist/robots.txt
@@ -16,8 +17,10 @@ rm /dist/robots.txt
 # create target directories in case they don't already exist
 mkdir /dist/assets
 mkdir /dist/posts
+mkdir /dist/media
 
 # copy new assets and robots
 cp -R /src/assets/ /dist
+cp -R /src/media/ /dist
 cp /src/templates/robots.txt /dist/robots.txt
 
