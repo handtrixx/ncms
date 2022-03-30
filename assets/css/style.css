@@ -94,6 +94,20 @@ body {
     100% {background-position: 100% 50%}
 }
 
+#scrollbar {
+    position: fixed;
+    z-index: 1000;
+    right: 10px;
+    top: calc(50vh - 64px);
+}
+.nav-link-scrollbar {
+    color: white;
+}
+
+.nav-link-scrollbar.active {
+    background-color: transparent !important;
+}
+
 #intro {
     background: linear-gradient(to right bottom, #151474, #151474, #d00000);
     color: var(--bs-gray-200);

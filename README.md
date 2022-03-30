@@ -5,9 +5,10 @@ The flat-file and node-red based WCMS created for Niklas Stephan's Website.
 LINK: https://niklas-stephan.de
 
 # Version
-Version 0.41
+Version 0.44
 
 # Features included
+- Sidebar Navigation on index for md+ devices
 - From parallel to serial deployment for better control
 - Deployment of static files to simple web server
 - Automatic Link generation for images in posts
@@ -42,3 +43,4 @@ Version 0.41
 - Optional CMS backend
 - Advanced Media Manager with img resize
 - Include node-red flows to src
+- compilation info from json
