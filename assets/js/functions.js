@@ -58,8 +58,6 @@ function welcome() {
     let textStyle = [
        "color: #fff",
        //"background-color: red",
-       "padding: 2px 4px",
-       "border-radius: 2px"
     ].join(';');
     let picStyle = [
        "font-family:monospace",
@@ -79,6 +77,13 @@ function welcome() {
 `, picStyle);
  
     console.log("%c https://github.com/handtrixx/ncms", textStyle);
+
+    fetch('/deploy.log')
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+        });
+
  }
 
 function setlang() {
