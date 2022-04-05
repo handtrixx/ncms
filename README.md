@@ -6,7 +6,7 @@ Link Frontend: https://niklas-stephan.de
 Link Github: https://github.com/handtrixx/ncms 
 
 # Version
-version 0.53
+version 0.54
 
 # Features included
 - Links in Markup automatically open on new tab
@@ -40,7 +40,7 @@ version 0.53
 - Filter unpublished Posts in Backend
 - Blog page with Isotope filters and masonry Look
 - Dynamic sitemap.xml and robots.txt by compilation
-- Bash script for stable file system based operations
+- ~~Bash script for stable file system based operations~~
 - Keep each static page small
 - Automatic Scrollspy in Posts
 - More Nice Background Colors
