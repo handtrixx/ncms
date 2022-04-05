@@ -167,7 +167,7 @@ function search() {
     myHeaders.append('cache-control', 'no-cache');
     var myInit = {method: 'GET',headers: myHeaders,};
 
-    const json = fetch("/assets/json/index.json", myInit).then(response => response.json())
+    const json = fetch("/searchindex.json", myInit).then(response => response.json())
     .then(function(json) {
         for (var i=0; i<json.length; i++) {
             var postlang = json[i].lang;
@@ -190,7 +190,7 @@ function search() {
             for (var j=0; j<uniqueResults.length; j++) {
                 var position = json[uniqueResults[j]].content.toLowerCase().search(searchInput);
                 resulthtml = resulthtml + `
-                <li class="list-group-item d-flex justify-content-between align-items-start">
+                <li class="list-group-item d-flex align-items-start">
                 <a href="`+json[uniqueResults[j]].link+`">
                     <div class="ms-2 me-auto">
                     <div class="fw-bold">`+json[uniqueResults[j]].headline+`</div>
@@ -315,6 +315,33 @@ function socialShare(value) {
 
 function gdpr_cookie() {
   document.cookie = "gdpr=yes; path=/";
+}
+
+function blogdateConvert() {
+    var postdates = document.getElementsByClassName("pdate");
+    for (var i = 0; i < postdates.length; i++) {
+        inputdate = postdates.item(i).innerHTML.replace(/\s/g, '');
+        outputdate = new Date(inputdate);
+        options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        if (lang == "de") {
+            outputdate = outputdate.toLocaleDateString('de-DE', options);
+        } else {
+            outputdate = outputdate.toLocaleDateString('en-US', options);
+        }
+        postdates.item(i).innerHTML = outputdate;
+    }
+}
+
+function postdateConvert() {
+    var inputdate = document.getElementById("postdate").innerHTML;
+    var outputdate = new Date(inputdate);
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    if (lang == "de") {
+        outputdate = outputdate.toLocaleDateString('de-DE', options);
+    } else {
+        outputdate = outputdate.toLocaleDateString('en-US', options);
+    }
+    document.getElementById("postdate").innerHTML = outputdate;
 }
 
 

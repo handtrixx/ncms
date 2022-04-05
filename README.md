@@ -5,9 +5,13 @@ The flat-file and node-red based WCMS created for Niklas Stephan's Website.
 LINK: https://niklas-stephan.de
 
 # Version
-version 0.46
+version 0.52
 
 # Features included
+- Show create/modify date on each post page
+- Integrate create/modify date of post to blog page
+- Rework Deployment for simplification and code cleanup by including node.js's fs and fs-extra
+- Get rid of bash script for file operations in favor of node.js's fs and fs-extra
 - compilation info from textfile to console log
 - Exclude media files from Git repository
 - Sidebar Navigation on index for md+ devices
@@ -42,6 +46,9 @@ version 0.46
 - unify backend
 
 # Todo's
+- External Links open on new tab
+- Translate categories
 - Optional CMS backend
 - Advanced Media Manager with img resize
 - Include node-red flows to src
+- More Dynamic Page Titles
