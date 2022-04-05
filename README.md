@@ -2,12 +2,14 @@
 
 The flat-file and node-red based WCMS created for Niklas Stephan's Website. 
 
-LINK: https://niklas-stephan.de
+Link Frontend: https://niklas-stephan.de
+Link Github: https://github.com/handtrixx/ncms 
 
 # Version
-version 0.52
+version 0.53
 
 # Features included
+- Links in Markup automatically open on new tab
 - Show create/modify date on each post page
 - Integrate create/modify date of post to blog page
 - Rework Deployment for simplification and code cleanup by including node.js's fs and fs-extra
@@ -46,7 +48,6 @@ version 0.52
 - unify backend
 
 # Todo's
-- External Links open on new tab
 - Translate categories
 - Optional CMS backend
 - Advanced Media Manager with img resize
