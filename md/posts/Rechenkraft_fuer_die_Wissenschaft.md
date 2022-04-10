@@ -12,7 +12,7 @@
 ---
 Wenn man sich zum Einem für wissenschaftliche Projekte begeistern kann und zum Anderen ein wenig Rechenleistung übrig hat, dann sollte man sich das Open Source Projekt und Werkzeug Boinc einmal genauer anschauen. In diesem Artikel berichte ich darüber, was Boinc eigentlich ist und wie man es einfach installieren kann.
 
-![certificate](/media/boinc/boinc_certificate_2022-04-01.png)
+![certificate](/media/full/boinc/boinc_certificate_2022-04-01.webp)
 
 ## Volunteer-Computing / Ehrenamtliches Rechnen?
 > Volunteer-Computing (zu deutsch: ehrenamtliches / freiwilliges Rechnen) beschreibt eine Technik der Anwendungsprogrammierung bei der einzelne Computernutzer Rechnerkapazitäten wie Rechenzeit und Speicherplatz auf freiwilliger Basis einem bestimmten Projekt zur Verfügung stellen, um unter Anwendung des verteilten Rechnens ein gemeinsames Ergebnis zu berechnen."
@@ -28,7 +28,7 @@ Sonst kann es teuer werden!
 ## Was ist Boinc?
 Die Schaffer des Tools Boinc haben es sich zur Aufgabe gemacht ca. 30 wissenschaftliche Volunteer-Computing Projekte über eine Oberfläche verfügbar und konfigurierbar zu machen. Auch Einstellungen wie die zur Verfügung zu stellenden Ressourcen und Reports über bereits geleistete Arbeit stellt das Tool zur Verfügung. Eine genaue Liste mit Beschreibung der Projekte findet sich hier:  https://boinc.berkeley.edu/projects.php . Dort wird auch schon ersichtlich, dass nicht jedes Projekt für jede Computerplattform existiert und andere nicht für jede Art von Plattform geeignet sind. So benötigen einige von Ihnen z.B. eine schnelle dezidierte Grafikkarte, da die angestellten Berechnung auf diesen Prozessortyp (GPU) optimiert sind.
 
-![screenshot](/media/boinc/boinc_screenshot.png)
+![screenshot](/media/full/boinc/boinc_screenshot.webp)
 
 
 ## OK, gefällt mir. Wie starte ich?

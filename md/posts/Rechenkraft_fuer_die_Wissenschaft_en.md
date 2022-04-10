@@ -12,7 +12,7 @@
 ---
 You are a big fan of science? You have a computer or a server? Then feel free to contribute in one or many projects just by donating some of yours PC's CPU power. The open source tool BOINC will make that very easy for you. Basically you just start the tool, define to which projects you want to contribute and set how much of your PC's power you want to "donate".
 
-![certificate](/media/boinc/boinc_certificate_2022-04-01.png)
+![certificate](/media/full/boinc/boinc_certificate_2022-04-01.webp)
 
 ## Volunteer computing?
 > Volunteer computing is a type of distributed computing in which people donate their computers' unused resources to a research-oriented project. The fundamental idea behind it is that a modern desktop computer is sufficiently powerful to perform billions of operations a second, but for most users only between 10-15% of its capacity is used. Typical uses like basic word processing or web browsing leave the computer mostly idle.
@@ -26,7 +26,7 @@ Additionally it's maybe not the best idea to run BOINC and similar on your cloud
 ## What is BOINC?
 BOINC provides you the chance to contribute to a selection of ca. 30 scientific projects by your CPU's and/or GPU's power and includes that into one single User interface. More details about the different projects can be found here: https://boinc.berkeley.edu/projects.php . Additionally the GUI also provides options for configuration and statistics.
 
-![screenshot](/media/boinc/boinc_screenshot.png)
+![screenshot](/media/full/boinc/boinc_screenshot.webp)
 
 
 ## How to start?

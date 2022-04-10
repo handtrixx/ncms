@@ -249,6 +249,8 @@ body {
     margin-right: auto;
     display: block;
     cursor: pointer;
+    padding-top: 12px;
+    padding-bottom: 12px;
 }
 
 code {

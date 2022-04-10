@@ -263,16 +263,22 @@ function goto(target,type) {
   
 function postspy() {
     // Generate ids for contents headlines
-    var elems = document.querySelectorAll('h2, h3, h4');
+    const elems = document.querySelectorAll('h2, h3');
     var counter = 1;
     var spylinks = "";
+    var fontstyle = "";
 
     for (var i = 0; i < elems.length; i++) {
         var element = elems[i];
         if (!element.id) {
+            if (element.nodeName != "H2") {
+                fontstyle = "fw-light";
+            } else {
+                fontstyle = "";
+            }
             
             element.id = "head-" + counter;
-            spylinks = spylinks+'<a class="nav-link" href="#head-'+counter+'">'+element.innerHTML+'</a>';
+            spylinks = spylinks+'<a class="nav-link '+fontstyle+'" href="#head-'+counter+'">'+element.innerHTML+'</a>';
             counter = counter+1;
         }
     }

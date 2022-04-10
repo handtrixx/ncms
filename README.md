@@ -1,14 +1,20 @@
 # NCMS - Niklas Stephan's Content Managment System
 
+![ncms_logo](https://dev.niklas-stephan.de/media/full/ncms/ncms_logo.webp)
+
 The flat-file and node-red based WCMS created for Niklas Stephan's Website. 
 
 Link Frontend: https://niklas-stephan.de
+
 Link Github: https://github.com/handtrixx/ncms 
 
 # Version
-version 0.54
+version 0.62
 
 # Features included
+- Ignore non-image files for media conversion, copy them instead
+- Asynchronious media file conversion to speed up deployment
+- Advanced Media Manager: auto image conversion to webp and thumbnail generation
 - Links in Markup automatically open on new tab
 - Show create/modify date on each post page
 - Integrate create/modify date of post to blog page
@@ -18,13 +24,13 @@ version 0.54
 - Exclude media files from Git repository
 - Sidebar Navigation on index for md+ devices
 - From parallel to serial deployment for better control
-- Deployment of static files to simple web server
+- ~~Deployment of static files to simple web server~~
 - Automatic Link generation for images in posts
 - animated backgrounds on index page
 - GDPR Cookie & tracking mgmt.
 - Source Code versioning via github integration
-- comments support via self hosted remark42, remove disqus
-- comments support via Disqus integration
+- comments support via self hosted remark42
+- ~~comments support via Disqus integration~~
 - Final Post Layout
 - SEO and page meta integration
 - favicon
@@ -50,6 +56,6 @@ version 0.54
 # Todo's
 - Translate categories
 - Optional CMS backend
-- Advanced Media Manager with img resize
 - Include node-red flows to src
 - More Dynamic Page Titles
+- Migrate posts from old website

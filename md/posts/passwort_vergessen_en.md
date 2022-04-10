@@ -23,7 +23,7 @@ Only thing required: Internet access from another pc and physical access to the 
 
 My friend just brought the affected pc to me, so I could take my time to work on the issue. Bad and good news was: The locked account was a local acccount, which means he could not utilize Micorosofts standard procedure for password reset but opened the gate for the dirty tricks described within the article.
 
-![Win10Download](/media/passwort_vergessen/win10down.jpeg)
+![Win10Download](/media/full/passwort_vergessen/win10down.webp)
 
 In advance I already created a Win 10 installation media on an USB-stick, since most tutorials recommended to do so.
 The official source for download at Microsoft is linked at the end of the article, and totally legal to use.
@@ -34,10 +34,10 @@ There are plenty of desriptions how to setup a USB-stick for Windows installatio
 Following procedure helped me to reset the password, it can slightly differ for you, depending on your environment.
 
 1. First thing is to boot the affected pc from the newly created installation media.
-![01_boot_img](/media/passwort_vergessen/01_boot_img.jpeg)
+![01_boot_img](/media/full/passwort_vergessen/01_boot_img.webp)
 
 2. When arrived at the dialogue for chosing the language, instead of doing so we press `SHIFT`+`F10` keys simultaniosly.
-![02_boot_shift](/media/passwort_vergessen/02_boot_shift.jpeg)
+![02_boot_shift](/media/full/passwort_vergessen/02_boot_shift.webp)
 
 3. Now, a command line appears (weird that it does). The we change to our system drive, e.g. by entering `C:`.
 
@@ -50,26 +50,26 @@ Following procedure helped me to reset the password, it can slightly differ for 
 7. Basically that waas the part we can call a small "hack", we will rely on in the next steps. The PC has to be rebooted without the instalalation media, now.
 
 8. At least in the latest versions of Win 10 (or better of the windows defender tool) Microsoft blocks any direct call to the command line, so we have to reboot again in safe mod to bypass this, too. If you don't use defender, you maybe can ignore this step. To reboot in safe mode: keep the `SHIFT` key pressed and click on bottom right power icon and select "reboot".
-![07_down](/media/passwort_vergessen/07_down.jpeg)
+![07_down](/media/full/passwort_vergessen/07_down.webp)
 
 9. After some seconds a selection screen appears, where you can choose "Advanced Options" and then "Startup Settings". Now you finally can click "Restart".
-![08_troubleshoot](/media/passwort_vergessen/08_troubleshoot.jpeg)
+![08_troubleshoot](/media/full/passwort_vergessen/08_troubleshoot.webp)
 
 10. Once the machine is up again, press key `6` to continue boot in safe mode.
-![08_troubleshoot](/media/passwort_vergessen/08_troubleshoot.jpeg)
+![08_troubleshoot](/media/full/passwort_vergessen/08_troubleshoot.webp)
 
-![09_advanced](/media/passwort_vergessen/09_advanced.jpeg)
+![09_advanced](/media/full/passwort_vergessen/09_advanced.webp)
 
 11. Don't worry that you are prompted to key in your password again. Let the magic start and click on the "Ease of Access" button (the second icon bottom right). Instead of the "Ease of Access" tool, the command line will open and you have full administrative persmissions on your pc, WITHOUT knowing the password.
-![10_startup](/media/passwort_vergessen/10_startup.jpeg)
+![10_startup](/media/full/passwort_vergessen/10_startup.webp)
 
-![11_startup_settings](/media/passwort_vergessen/11_startup_settings.jpeg)
+![11_startup_settings](/media/full/passwort_vergessen/11_startup_settings.webp)
 
 12. To reset the locked password a few more commands have to follow, now: `net user` will show us all currently existing user accounts on the pc. In my case the account I wanted to reset, was not shown here. Maybe a gap of knowledge on my own, but anyhow I saw the "Administrator" user. So I changed my plan slightly and reactived that account (it's deactivated in a default installation), to use it login to Windows and the reset my targets user password via the graphical interface of Windows. To reactivate the "Administrator" account, see the next step.
-![12_netuser](/media/passwort_vergessen/12_netuser.jpeg)
+![12_netuser](/media/full/passwort_vergessen/12_netuser.webp)
 
 13. Command `net user Administrator /active:yes` will do the reactivation for us. Another  `net user Administrator PASSWORD` sets the password to "PASSWORD". If you have issues to find your original user and also not able to reactivate the Administrator account, the net user ... commands also would allow you to create a new user.
-![13_cmd](/media/passwort_vergessen/13_cmd.jpeg)
+![13_cmd](/media/full/passwort_vergessen/13_cmd.webp)
 
 14. Time for another reboot.
 

@@ -26,7 +26,7 @@ Das Benutzerkonto auf das er nicht mehr zugreifen konnte, war ein lokales Konto.
 
 Hinweis: Für ein Benutzerkonto, dass mit der Microsoft Cloud verknüpft ist, funktioniert diese Anleitung nur teilweise - Dort ist das zürücksetzen des Passworts aber auch kein Problem und kann von einem anderen Endgerät aus, Online erledigt werden.
 
-![Win10Download](/media/passwort_vergessen/win10down.jpeg)
+![Win10Download](/media/full/passwort_vergessen/win10down.webp)
 
 Außerdem habe ich mir ein Windows 10 Installationsmedium auf einem USB-Stick erzeugt, weil ich während der ersten Recherechen darauf gestoßen bin, dass das erforderlich ist. Den offiziellen Windows 10 Download findet man unter in den Quellen am Ende des Artikels. Zum erstellen des Sticks brauchen wir natürlich irgendwo einen zweiten Rechner auf den wir Zugriff haben. Die heruntergeladene ISO Datei lässt sich je nach Betriebssystem unterschiedlich auf den Stick bringen. Google hilft.
 
@@ -37,10 +37,10 @@ Folgende Schritt-für-Schritt Anleitung umreißt die als funktionierend gesteste
 
 
 1. Zunächst booten wir von unserem zuvor erzeugten Bootstick.
-![01_boot_img](/media/passwort_vergessen/01_boot_img.jpeg)
+![01_boot_img](/media/full/passwort_vergessen/01_boot_img.webp)
 
 2. Im ersten Dialogfenster der Sprachauswahl etc. drücken wir gleichzeitig die SHIFT + F10 Tasten.
-![02_boot_shift](/media/passwort_vergessen/02_boot_shift.jpeg)
+![02_boot_shift](/media/full/passwort_vergessen/02_boot_shift.webp)
 
 3. In der daraufhin erscheinenden Kommandozeile (oha; dass dürfte doch eigentlich gar nicht funktionieren), wechseln wir auf die Partition unserer lokalen Windows 10 Installation, also z.B. mit den Befehl "C:".
 
@@ -53,26 +53,26 @@ Folgende Schritt-für-Schritt Anleitung umreißt die als funktionierend gesteste
 7. Das war der erste Streich. Wir können nun die Windows Installationsroutine schließen und den Rechner wieder normal hochfahren.
 
 8. Wir müssen am Anmeldebildschirm einen erneuten Reboot im abgesicherten Modus herbeiführen, da zumindest mir, sonst Aufrufe der Kommandozeile blockiert wurden (vermutlich vom im Hintergrund laufenden Systemschutz-Program...). Also die "SHIFT" Taste gedrückt halten, unten Rechts auf das Powersymbol drücken und Neustart auswählen.
-![07_down](/media/passwort_vergessen/07_down.jpeg)
+![07_down](/media/full/passwort_vergessen/07_down.webp)
 
 9. Im nach kurzer Zeit erscheinenden Zwischendialog wählen wir "Advanced Options" bzw. "Erweiterte Optionen", und dann "Startup Settings" bzw. "Starteinstellungen". Nun auf "Restart" bzw. "Neustart" klicken. (Sorry, habe gerade nur Englische Screenshots)
-![08_troubleshoot](/media/passwort_vergessen/08_troubleshoot.jpeg)
+![08_troubleshoot](/media/full/passwort_vergessen/08_troubleshoot.webp)
 
 10. Sobald der Rechner wieder oben ist, drücken wir die Taste 6 um den abgesicherten Modus mit Kommandzeile zu starten.
-![08_troubleshoot](/media/passwort_vergessen/08_troubleshoot.jpeg)
+![08_troubleshoot](/media/full/passwort_vergessen/08_troubleshoot.webp)
 
-![09_advanced](/media/passwort_vergessen/09_advanced.jpeg)
+![09_advanced](/media/full/passwort_vergessen/09_advanced.webp)
 
 11. Leider startet sich die Kommandozeile nicht direkt, da wir zunächst unser Passwort eingeben sollen (haha), aber unser Trick den wir durch Schritt 6 ermöglicht haben, kann nun ausgeführt werden: Wir klicken auf das Symbol für die Eingabehilfe (das zweite Symbol rechts unten) und Voilà: Die Kommandozeile öffnet sich, und dieses mal mit vollen Berechtigungen!
-![10_startup](/media/passwort_vergessen/10_startup.jpeg)
+![10_startup](/media/full/passwort_vergessen/10_startup.webp)
 
-![11_startup_settings](/media/passwort_vergessen/11_startup_settings.jpeg)
+![11_startup_settings](/media/full/passwort_vergessen/11_startup_settings.webp)
 
 12. Durch Eingabe des Befehls "net user", bekommen wir eine Liste aller lokalen Benutzerkonten angzeigt. Da fehlt mir anscheinend das Know-How, aber das Benutzerkonto um das es mir eigentlich geht, wird gar nicht angzeigt?! Macht nichts: Wir reaktivieren einfach das vorhandene "Administrator" Benutzerkonto und arbeiten mit diesem weiter. Wie? nächster Schritt:
-![12_netuser](/media/passwort_vergessen/12_netuser.jpeg)
+![12_netuser](/media/full/passwort_vergessen/12_netuser.webp)
 
 13. Der Befehl "net user Administrator /active:yes" aktiviert das Konto und der Befehl "net user Administrator PASSWORD" setzt das Passwort PASSWORD für diesen. (mit angepassten Befehlen lässt sich so natürlich auch ein komplett neuer User als Admin einrichten, falls der User "Administrator" nicht verfügbar ist.)
-![13_cmd](/media/passwort_vergessen/13_cmd.jpeg)
+![13_cmd](/media/full/passwort_vergessen/13_cmd.webp)
 
 14. Weil es so schön ist: Zeit für einen Reboot
 
