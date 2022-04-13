@@ -14,8 +14,10 @@ Link Github: https://github.com/handtrixx/ncms
 version 0.59
 
 ## Features included
+
 version 0.59
 - Deployed to Production
+
 version 0.58
 - Ignore non-image files for media conversion, copy them instead
 - Asynchronious media file conversion to speed up deployment
