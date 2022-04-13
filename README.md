@@ -2,7 +2,7 @@
 
 or Node-Red Content Managment System, or Not-Another Content Management System.
 
-![ncms_logo](https://dev.niklas-stephan.de/media/full/ncms/ncms_logo.webp)
+![ncms_logo](https://niklas-stephan.de/media/full/ncms/ncms_logo.webp)
 
 The flat-file and node-red based WCMS created for Niklas Stephan's Website. 
 
