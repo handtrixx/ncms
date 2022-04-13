@@ -17,6 +17,7 @@ version 0.59
 
 version 0.59
 - Deployed to Production
+- Migrate posts from old website
 
 version 0.58
 - Ignore non-image files for media conversion, copy them instead
@@ -135,7 +136,6 @@ version 0.01
 - Optional CMS backend for frontend editing
 - Include node-red flows to src
 - More Dynamic Page Titles
-- Migrate posts from old website
 - Translate posts from old website
 - if posts only exists in 1 language: show info instead of 404 error
 
