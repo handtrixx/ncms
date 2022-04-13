@@ -263,7 +263,8 @@ function goto(target,type) {
   
 function postspy() {
     // Generate ids for contents headlines
-    const elems = document.querySelectorAll('h2, h3');
+    //const elems = document.querySelectorAll('h2,h3');
+    const elems = document.querySelectorAll('h2');
     var counter = 1;
     var spylinks = "";
     var fontstyle = "";

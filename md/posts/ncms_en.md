@@ -1,62 +1,64 @@
 ---
 {
-"title": "Noch ein WCMS? Warum nicht!",
-"filename": "ncms.md",
+"title": "Another WCMS? Why not!",
+"filename": "ncms_en.md",
 "imgurl":"ncms/ncms_logo.png",
 "keywords": ["Projekte"],
-"language": "de",
+"language": "en",
 "date":"2022-04-10",
 "published":true,
-"excerpt":"Warum sollte man sein eigenes Web Content Management System (WCMS) erstellen wollen, es gibt doch schon hunderte?!"
+"excerpt":"Is there any reason to create your own Web Content Management System (WCMS)? There are already hunderds of them."
 }
 ---
 ![ncms_pageload](/media/full/ncms/ncms_logo_small.webp)
 
-Warum sollte man sein eigenes Web Content Management System (WCMS) erstellen wollen, es gibt doch schon hunderte?!
-Völlig korrekt und es gibt auch keinen wirklichen Grund so etwas zeitintensives zu tun, außer natürlich man ist mit dem was es gibt nicht so richtig zufrieden und/oder möchte einfach selber wissen und ausprobieren wie man so etwas angehen kann.
-Genau mit dieser Motivation, und der ursprünglichen Intention für meine persönliche Website ein neues Layout zu entwickeln, habe ich mir innerhalb eines Monats ein eigenes WCMS erstellt: nCMS - "niklas stephan's Content Management System" oder auch "node-red Content Management System" oder "not another Content Management System"!
+Is there any reason to create your own Web Content Management System (WCMS)? There are already hunderds of them.
+That's true and because of that there is no obvious reason to start such a project. Just if we are not completly satisfied about what is currently available or we just want to learn and try out what it means to do so.
+Originally I just wanted to redesign my website at https://niklas-stephan.de , but then I had fun to start from scratch and built up most of the backend on my own.
+And that's the intention behind nCMS, "niklas stephan's Content Managment System" or "node-red Content Management System" or "not another Content Management System". 
 
-## Was ist nCMS und was kann es?
-nCMS ist ein Flat-File und Headless Web Content Management System. D.h. im Gegensatz zu z.B. zu Wordpress, kommt es ohne eine Datenbank aus und besteht aus Dateien. NCMS basiert im Backend auf Node-Red und darin entwickelten Node.js JavaScript Funktionen.
-Änderungen am Code von NCMS werden durch Deployments in Node-Red geschrieben und die Änderungen an Dateien über GIT in Github synchronisiert und versioniert. Änderungen an Inhalten wie neue Posts werden ebenfalls über Deployments, manuell oder als Webhook gestartet. Alle Dateien werden darauf hin generiert und einem Webserver als statische Dateien zur Verfügung gestellt. Das heisst dass der Abruf der Inhate über eine mit nCMS erstellte Website rasend schnell ist. Das erstellen einzelner Blog Beiträge erfolgt in Markup Syntax in einem beliebigem Texteditor. 
+## What is nCMS and what is it capable of?
+nCMS is a headless WCMS based on a flat-file hierachy, so in comparison to e.g. Wordpress we do not use any database or any traditional server side programming language. Instead the backend utilizes my favorite Low-Code platform Node-Red, which is provided by a node.js instance. So our programming language for both, frontend and backend is pure JavaScript.
+Changes in our backend code are deployed, like it is standard when using Node-Red. Additonal any changes not made directly in the Node-Red flow are based on files, which are synchronized and versionized in Github. Also the frontend is based on deployments, which are started externally via a webhook or manually inside the Node-Red flow. Once started the frontend deployment generates all files required and provides them as static files to a simple webserver of your choice.
+In conclusion that makes a website created with nCMS extremly fast. To complete the story, it's left to so say that if we want to create/edit a (new) post, we can use the markup language and edit the file via any text editor application.
 
-Weitere bis jetzt integrierte Features sind:
-- Multi-Language Support für Blog Beiträge und alle Seiten
-- Kommentarfunktion in den Blogbeiträgen
-- Media Management über einfachen Datei-Upload
-- Template- und Snippet-basierte Erstellung des HTML Gerüsts
-- Explizit kein Einsatz von Frontend Frameworks wie Vue oder Angular, sondern reines "Vanilla" Javascript.
-- Automatische Generierung von Meta-Daten für Social Media Integration und SEO
-- Volltextsuche auf Basis eines automatisch generierten lokalen Index
-- Freigabefunktion von Posts über ein "published" Attribut
+Integrated features are (so far):
+- Multi-Language Support for Posts and all other pages
+- Comment Managend for each Post
+- A simple Media Manager
+- Frontend HTML generation based on Templates and Snippets
+- Vanilla JavaScript only, no usage of any additional Framework like Vue or Angular by intention.
+- Automatic creation of meta data required for social media and search engine integration.
+- An internal Full-Text search functionality, that makes additional server calls obsolete.
+- Publishing via simple meta attribute
 
-Und viele mehr, dokumentiert im GitHub Repository des Projekts: https://github.com/handtrixx/ncms
+And a lot more, documented and availabe at the projects Github repository: https://github.com/handtrixx/ncms
 
-## Schneller, aufgeräumter und einfacher als Wordpress und andere?
-Ja, ja, ja. Wie genau, erläutere ich hier.
+## faster, cleaner and simplier than Wordpress and similar?
+Yes, yes, yes. I will try to explain here why and how that's achieved.
 
-#### Schnell
-- Backend - Ein Deployment (erzeugen der statischen Files für den Webserver) dauert zwischen 70 und 320 Millisekunden.
+#### Fast
+- Backend - a sinlge deplyoments (the creation of all static files required for the frontend) duration is between 70 and 320 milliseconds.
 ![ncms_deployment](/media/full/ncms/ncms_deployment.webp)
-- Frontend - z.B. die Startseite ist trotz aller Animationen, Effekte und Bilder nur 670KB groß und kann in zwischen 100 und 300 Millisekunden vom Client vollständig geladen werden.
+- Frontend - as an example, even by heavy usage of animations, images and other effects, the size of of the frontage of niklas-stephan.de is not more then 700KB and can be extremly fast provided as flat-files between 100 - 300 milliseconds.
 ![ncms_pageload](/media/full/ncms/ncms_pageload.webp)
 
-#### Aufgeräumt
-- Backend: Der Einsatz von Node-Red gibt eine grafische Übersicht und gewährleistet so, dass wir den Überblick nicht verlieren. Dazu später noch mehr.
+#### Clean
+- Backend: Only overhead is the utilization of Node-Red, which on the other hand provides us a nice graphical overview of the complete program's logic.
 ![ncms_node-red-flow](/media/full/ncms/ncms_node-red-flow.webp)
-- Frontend: Durch den Verzicht auf JavaScript Frameworks und der Einfachheit des Systems an sich, werden wir mit sauberen HTML Code bei der Ausspielung belohnt. Für https://niklas-stephan.de habe ich zwar für das Frontend UI auf das HTML5 Grundgerüst von Bootstrap 5 zurück gegriffen, aber das fällt nicht mehr schwer ins Gewicht, und kommt mittlerweile im Standard ebenfalls ohne das aufgeblähte jQuery Framework zurecht.
+- Frontend: Since no additional frameworks are used, everything is quite simple and clean code is the result. While creating https://niklas-stephan.de , I additionally used the HTML5 templates from Bootstrap, but also that became much more clean and simple in its current version 5.
 ![ncms_lighthouse-report](/media/full/ncms/ncms_lighthouse.webp)
 
-#### Einfach
-- Backend: Assets, Medien, Templates und Snippets werden über Visual Studio Code oder einen anderen Texteditor + Dateimanager bereitgestellt. In Node-Red wird das alles zusammengefügt, durch JavaScript Code und node.js Module um Funktionalitäten erweitert und das Endergebnis schließlich in Form von statischen Dateien in ein Verzeichnis auf einem nginx webserver zur Verfügung gestellt. Das ist der Kern von nCMS.
+#### Simple
+- Backend: To serve Assets, Media, Templates and Snippets a simple Editor like Visual Studio Code or similar can be used. Nice thing when using VS Code is, that it's including SSH access to the server, GitHub Integration and File Manipulation capabilities. That more or less everything we need beside a Browser and a Photoshop (Clone like Pixemator). In Node-Red we bring all sources together and extend the programs logic by futher js code and usage of several node.js modules.
 ![ncms_deployment](/media/full/ncms/ncms_logo.webp)
-- Frontend: Die Wahl zwischen Deutsch und Englisch erfolgt entweder automatisch oder wird manuell festegelegt. Es gibt eine Startseite, eine Seite zu Suche, eine Seite zu Datenschutz und Impressum, eine Seite zum abfangen ungültiger Aufrufe und eine Seite mit der Übersicht über alle Posts. Selsbstredend ist das komplette UI auf alle Endgerätearten zur Darstellung optimiert.
+- Frontend: The selection of the language is done automatically but can be overwritten manual by click on the desired language on top of the screen. There is a front page, including links to the other areas like the search page, the data privacy and imprint page and the blog page. Beside that we have a 404 error page to catch calls to not (any longer) existing pages.
+No need to mention that the frontend is optimized to be shown nicely on any kind of browser device.
 
-## Hinter den Kulissen
-Der komplette Aufbau von nCMS erfolgt in einer Docker-Compose Umgebung.
-Alle Dateien aus dem Volume `src` liegen ebenfalls auf https://github.com/handtrixx/ncms.
+## Behind the scenes
+A docker compose environment is used to host ncms. You can find the source content of volume `src` at https://github.com/handtrixx/ncms.
 
-Hier meine Beispielkonfiguration auf Basis des offiziellen Node-Red Images von Docker Hub (https://hub.docker.com/r/nodered/node-red):
+The contents of `docker-compose.yml` is shown here and based on the official Nod-Red image from Docker Hub (https://hub.docker.com/r/nodered/node-red):
 ````yaml
 version: "3.0"
 services:
@@ -82,11 +84,12 @@ networks:
   dmz:
     external: true
 ````
-Erkärungsbedürftig sind hier eigentlich nur die Netzwerkonfiguration und die verschiedenen Volumes.
-Wie auch in meinen anderen Beiträgen zu Matomo, Boinc und anderen setze ich auf meinem Cloud Server einen Reverse Proxy auf Basis des Nginx Proxy Managers (https://hub.docker.com/r/jc21/nginx-proxy-manager) ein. Das Volume/Verzeichnis `./dist` ist in meinem Reverse Proxy ebenfalls über ein `ln -s` verlinkt, so dass man keine doppelten Deployments machen muss und ein weiterer Webserver obsolet bleibt. Node-Red selbst, also das Backend ist über eine eigene Subdomain erreichbar.
+Not much to explain, since it's relativly straigt forward. Maybe to mention are the diffrent volumes and the network configurataion. Just like most in my other web related posts, I use the nginx managment tool "Nginx Proxy Manager" as a reverse proxy (https://hub.docker.com/r/jc21/nginx-proxy-manager). The volume `./dist` of our environment is direclty linked to the reverse proxy via symbolic link `ln -s`. So we do not have to copy or generate the files twice during the deployment and have the directly available without an additional web server instance.
+The Node-Red GUI is made reachable by configuration at a separate subdomain.
 
-#### Verzeichnisstruktur
-Im Verzeichnis `./src` befinden sich folgende Unterordner:
+#### File System setup
+Directoy `./src` includes following subfolders to be manually created:
+
 - assets
 - - css
 - - fonts
@@ -100,20 +103,21 @@ Im Verzeichnis `./src` befinden sich folgende Unterordner:
 - snippets
 - templates
 
-In das Verzeichnis `assets` und dessen Unterordner gehören alle im Frontend wiederholt benötigten Dateien, wie z.B. css und javascript von Bootstrap 5 (https://getbootstrap.com/), aber natürlich vor allem auch eigene Stylesheets und Javascript Funktionen. Im Unterordner `json` legen wir unsere statischen Übersetzungschlüssel ab.
+Folder `assets` and its subfolders holds all assets like the sources of Bootstrap 5 (https://getbootstrap.com/) and for sure our own css styles and javascript functions. Subdirectory `json` just contains our static translations.
 
-Der Ordner `md` enthält in seinem Unterordner `posts` offensichtlich alle unsere in Markup geschriebenen Posts, welche auch an ihrer Dateiendung `.md` erkennbar sind.
+Directory `md` and its subfolder `posts` contains our post files which are ending by an `.md` suffix.
 
-In das Verzechnis `media` und maximal eine Unterodnerebene tiefer können wir alle Bilder "werfen" die wir in unseren Posts verwenden wollen. Diese werden dann während des Deployments automatisch ins platzsparende `.webp` Format konvertiert und ein Thumbnail für jedes Bild generiert.
+Our Images and other media files are placed at folder `media`. I wrote the system to also check subfolders for files, but that currently on works down one level (so, content in a sub-sub folder will be ignored).
+Later we will see these files will automatically converted to space saving and web-optimized format `.webp` and additonally also a thumbnail will be generated.
 
-Im Ordner `snipptes`haben wir alle HTML Elemente die wir auf allen Seiten immer wieder benötigen gelegt.
+All HTML elements we want to use more than one time are stored in folder `snippets`.
 
-Analog dazu liegen im Verzeichnis `templates` die Ausgangsdateien unseres Frontends, die während des Deployments mit Inhalt angereichtert werden.
+Directoy `templates` contains the sources for all HTML pages where we include our snippets and other data during deployment later on.
 
-All das lässt sich Transparent auch im Github Projekt unter: https://github.com/handtrixx/ncms nachvollziehen.
+If you would like to see the details about which files need to be created and what content they could contain, please checkout my Github repository at: https://github.com/handtrixx/ncms.
 
 #### Templates
-Im Verzeichnis Templates befinden sich folgende Dateien: `404.html` - Die Fehlerseite die immer dann angezeigt wird, wenn eine ungültige Abfrage auf die Website erfolgt. `blog.html` - Die Seite die die Übersicht über alle Posts bereit stellt. `index.html` - Die Startseite mit ihren Inhalten. `post.html` - Die Vorlage aus der die einzelen Beitragsseiten gerendert werden. `privacy-policy.html` - Die Seite zu Datenschutz und im Impressum auf die im Footer verllinkt ist und die somit von überall aus erreichbar ist und sein muss. `robots.txt` - Infos für die Crawler von Suchmaschinen. `search.html` - Meine Seite auf der man Suchen kann und die über einen json Index sämtliche Suchergebnisse ohne Abfrage am Server bereitstellt.
+The template files are: `404.html` - Our error page always shown in case a requested page simply does not exist or if a post maybe has not been translated yet. Our `blog.html` is used to provide an overview of all existing published posts, which can be filtered and sorted in several ways. The `index.html` simply contains our landing page with its content. A special role is assigned to the `post.html` file. It is used by each post as a template, to ensure all posts provide the same UX. `privacy-policy.html` - Die Seite zu Datenschutz und im Impressum auf die im Footer verllinkt ist und die somit von überall aus erreichbar ist und sein muss. `robots.txt` - Infos für die Crawler von Suchmaschinen. `search.html` - Meine Seite auf der man Suchen kann und die über einen json Index sämtliche Suchergebnisse ohne Abfrage am Server bereitstellt.
 
 #### Snippets
 Die Snippets die später im Deployment in alle HTML Templates eingeschläust werden sind `footer.html`, `head.html`, `navbar.html`, `script.html` . Durch die Aufteilung in diese Snippets haben wir den massiven Vorteil, dass wir im Falle einer gewünschten Anpassung z.B. im Navigationsmenü, diese nur genau einmal durchführen müssen um sie auf allen Seiten zu ändern.

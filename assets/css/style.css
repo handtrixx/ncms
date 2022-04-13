@@ -251,6 +251,7 @@ body {
     cursor: pointer;
     padding-top: 12px;
     padding-bottom: 12px;
+    max-height: 90vh;
 }
 
 code {
@@ -517,7 +518,7 @@ blockquote {
 }
 
 .c-gray {
-    color: var(--bs-gray-500)
+    color: var(--bs-gray-600)
 }
 
 .bg-gray {
@@ -537,6 +538,10 @@ blockquote {
     border-radius: 1rem !important;
     font-weight: bold;
     border: 2px solid transparent;
+}
+
+.btn:active, .btn.active {
+    box-shadow: 0 0 0 0.25rem var(--bs-orange);
 }
 
 .btn:hover {
