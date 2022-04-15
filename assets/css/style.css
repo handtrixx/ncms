@@ -89,6 +89,8 @@ body {
     to { transform: translateX(-50%); }
 }
 
+
+
 @keyframes diagonal {
     0% {background-position: 0% 50%}
     100% {background-position: 100% 50%}
@@ -132,10 +134,10 @@ body {
 #cv::after {
     content: "";
     background: url("../img/career.webp");
-    background-repeat: repeat-x;
+    /*background-repeat: repeat-x;*/
     width:200%;
     background-size: cover;
-    background-attachment: fixed;
+    /*background-attachment: fixed;*/
     background-position: center;
     position: absolute;
     top: 0px;
@@ -163,10 +165,8 @@ body {
 #education::before {
     content: "";
     background: url("../img/education.webp");
-    background-repeat: repeat-x;
     width:200%;
     background-size: cover;
-    background-attachment: fixed;
     background-position: center;
     position: absolute;
     top: 0px;

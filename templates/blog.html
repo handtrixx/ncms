@@ -9,16 +9,16 @@
     <section id="content">
       <div class="container-lg pb-5 pt-2">       
             <div class="row">            
-              <div class="col-12 col-md-8 col-xl-9 d-flex mb-2 button-group filters-button-group" id="categories">
+              <div class="col-12 col-md-8 col-xl-9 d-flex flex-wrap mb-2 button-group filters-button-group" id="categories">
                 <button onclick="sort()" data-filter="*" type="button" 
-                class="btn bg-blue c-white me-2">All</button>
+                class="btn bg-blue c-white me-2 mb-3">All</button>
                 <!-- CATEGORIES -->
               </div>
               
               <div class="col-12 col-md-4 col-xl-3 d-flex mb-2 justify-content-end align-items-center">
                 <div class="button-group sort-by-button-group" id="sorting"> 
                   <button onclick="sort('datedesc')" data-sort-value="original-order" type="button" 
-                  class="btn c-white me-2">
+                  class="btn c-white me-2 mb-3">
                   <svg
                   xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
                   class="bi bi-sort-numeric-up-alt" viewBox="0 0 16 16">
@@ -31,7 +31,7 @@
                 </svg>
                 
                 <button onclick="sort('dateasc')" data-sort-value="date" type="button" 
-                class="btn c-white me-2">
+                class="btn c-white me-2 mb-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                     fill="currentColor" class="bi bi-sort-numeric-down"
                     viewBox="0 0 16 16">
@@ -45,7 +45,7 @@
                   </svg>
               </button>
               <button onclick="sort('name')" data-sort-value="name" type="button" 
-                class="btn c-white">
+                class="btn c-white mb-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                     fill="currentColor" class="bi bi-sort-alpha-down" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"

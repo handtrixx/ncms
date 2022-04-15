@@ -1,13 +1,13 @@
 ---
 {
-"title": "Another WCMS? Why not!",
+"title": "not another Web Content Management System?! Let me introduce nCMS",
 "filename": "ncms_en.md",
 "imgurl":"ncms/ncms_logo.png",
 "keywords": ["Projekte"],
 "language": "en",
-"date":"2022-04-10",
+"date":"2022-04-15",
 "published":true,
-"excerpt":"Is there any reason to create your own Web Content Management System (WCMS)? There are already hunderds of them."
+"excerpt":"Is there any reason to create your own Web Content Management System (WCMS)? There are already hunderds of them. Let me introduce nCMS to you and share some thoughts why I created it."
 }
 ---
 ![ncms_pageload](/media/full/ncms/ncms_logo_small.webp)
@@ -117,25 +117,30 @@ Directoy `templates` contains the sources for all HTML pages where we include ou
 If you would like to see the details about which files need to be created and what content they could contain, please checkout my Github repository at: https://github.com/handtrixx/ncms.
 
 #### Templates
-The template files are: `404.html` - Our error page always shown in case a requested page simply does not exist or if a post maybe has not been translated yet. Our `blog.html` is used to provide an overview of all existing published posts, which can be filtered and sorted in several ways. The `index.html` simply contains our landing page with its content. A special role is assigned to the `post.html` file. It is used by each post as a template, to ensure all posts provide the same UX. `privacy-policy.html` - Die Seite zu Datenschutz und im Impressum auf die im Footer verllinkt ist und die somit von überall aus erreichbar ist und sein muss. `robots.txt` - Infos für die Crawler von Suchmaschinen. `search.html` - Meine Seite auf der man Suchen kann und die über einen json Index sämtliche Suchergebnisse ohne Abfrage am Server bereitstellt.
+The template files are: `404.html` - Our error page always shown in case a requested page simply does not exist or if a post maybe has not been translated yet. Our `blog.html` is used to provide an overview of all existing published posts, which can be filtered and sorted in several ways. The `index.html` simply contains our landing page with its content. A special role is assigned to the `post.html` file. It is used by each post as a template, to ensure all posts provide the same UX. `privacy-policy.html` instead is a simple template to provide the content of our privacy policy and the imprint which is required to be directly reachable from any page by EU law. The `robots.txt` template is used to provide search engine crawlers some basic infomration about our website. At last there is the `search.html` template which includes the locally indexed search functionality of the frontend.
 
 #### Snippets
-Die Snippets die später im Deployment in alle HTML Templates eingeschläust werden sind `footer.html`, `head.html`, `navbar.html`, `script.html` . Durch die Aufteilung in diese Snippets haben wir den massiven Vorteil, dass wir im Falle einer gewünschten Anpassung z.B. im Navigationsmenü, diese nur genau einmal durchführen müssen um sie auf allen Seiten zu ändern.
+The so called Snippets are basic components which will be inserted to each template based page. They are separated to save time and keep our code clean. That way for example a change in the navigation snippet `navbar.html` is automatically reflected at all pages.
+The used snippets are: `footer.html`, `head.html`, `navbar.html`, `script.html`.
 
-## Programmlogik mit node.js und Node-Red
-Node-Red basiert auf node.js und erlaubt uns in einer Art Ablaufdiagramm verschiedene Elemente und Funktionen miteinander zu verbinden. Das nennt sich in Node-Red "Flow". In NCMS nutze ich auch nur diese Basisfunktionalität von Node-Red und keine weitere Plug-Ins aus der Palette. Statdessen lade ich in den verschiedenen Nodes node.js Pakete nach um den Funkionsumfang des Systems zu erweitern.
+## node.js and Node-Red program backend logic
+Nod-Red itself is based on node.js and a platform for low-code programming of event driven applications. We can use so called nodes which for example can represent a javascript function and then link many of these nodes as a flow.
+For nCMS we nearly only use these capabilites but ignore the "low-code" part a bit, since we only work with full blown javascript functions.
+What we do instead to integrate other npm modules into the specific nodes when required, which can be easily done via each nodes setup tab.
 
 ![ncms_node-red-flow](/media/full/ncms/ncms_node-red-flow.webp)
 
-Im folgenden kurz Erläuterung zu den einzelen Nodes.
+Here more detailed information about the created nodes and their details.
 
 #### /deploy
-Hierbei handelt sich um einen lauschenden `http in` Node, um den Start eines Deplyoments durch einen Webhook zu starten. D.h. z.B. durch `curl -X POST -d 'key=----' https://ncms.niklas-stephan.de/deploy` startet man das Deployment.
+The `/deploy` node is a simple `http in` which allows us to start our deployments by a webhook. That means by calling e.g. `curl -X POST -d 'key=----' https://ncms.niklas-stephan.de/deploy` from anywhere we start a request for a deplyoment.
 
 #### catch key
-Natürlich soll nicht einfach jeder ein Deployment starten können, deshalb noch eine kleine Sicherheitsabfrage im `catch key` Node.
-Im Node unter "Setup" wird das npm modul `fs-extra` geladen und als `fse` bereit gestellt, damit wir Zugriff auf das Dateisystem haben und den im Ordner `/data` hinterlegten key mit dem vergleichen können, der uns für das Deployment im Webhook zur Verfügung gestellt wurde.
-Die Funktion selbst sieht dann so aus:
+For sure we don´t want to allow just anybody to start deployments, so the `catch key` node compares the "key" variable sent by the webhook call with a secret key stored in our backend we have stored in the `data` folder of our docker enviroment to be sure we do not accidently sync that key to Github as well.
+As mentioned early we add an additioanl npm module `fs-extra` and make it availabel as `fse` at the setup tab of the node.
+That allows us to access the containers file system to compare the keys.
+
+The complete function in the node is:
 
 ````js
 const transferedKey = msg.payload.key;
@@ -154,14 +159,15 @@ if (transferedKey == systemKey) {
     
 }
 ````
-Auch hat dieser Node 2 Ausgänge. Falls die beiden keys übereinstimmen wird mit dem Deployment fortgefahren - Ausgang 1. Falls aber nicht, dann wird eine Fehlernachricht an Ausgang 1 übergeben und das Deployment damit abgebrochen.
+There is to mention that this node has two exit paths. Exit one is used if the keys are matching and continues the deplyoment, while exit two is called if the authentication fails and will cancel the deplyoment.
 
 #### deploy
-Startet das Deployment ebenfalls, aber eben manuell über die Node-Red Oberfläche und nicht als Webhook.
+The `deploy` node is for starting a deployment manually by click at the Node-Red GUI.
 
 #### get posts
-In diesem Node laden wir den Inhalt aller Posts aus den `*.md` Dateien und speichern diesen als Objekte in einem Array zu späteren Verwendung ab. Außerdem machen wir neben dem `fs-extra` Modul noch intensiven Gebrauch des Moduls `markdown-it` und Plugins für diesen. markdown-it (https://github.com/markdown-it/markdown-it) hilft uns dabei den Inhalt von Markup nach HTML zu konvertieren.
-
+The 28 lines of the `get posts` node are enought to achieve a lot. The function will read all posts we have created and convert the markup into valid HTML. Also it additionaly manipulates the sources by modifying links, images and extracting the meta data stored in the `.md` files. Each output will be saved inside an array for later usage.
+Beside the already known `fs-extra` npm packages we setup `markdown-it` and plugins for it.
+markdown-it (https://github.com/markdown-it/markdown-it) is doing the magic of converting markup to HTML and the major reason why our own code is as simple as 28 lines can be.
 
 `````js
 msg.baseurl = "https://niklas-stephan.de"
@@ -194,7 +200,7 @@ return msg;
 `````
 
 #### get snippets
-Über das npm Modul `fs-extra` laden wir den Inhalt unserer snippets und speichern diese als Array `msg.snippets`, damit wir später im Flow darauf zugreifen können.
+Again we use the `fs-extra` module in our function, this time to read the content frorm each snippet to save it in our flow as array `msg.snippets`.
 
 ````js
 msg.snippets = {};
@@ -206,15 +212,14 @@ for (var i=0; i<alength; i++) {
     var srcFile = path+files[i];
     var srcContent = fse.readFileSync(srcFile, 'utf8')
     
-    msg.snippets[files[i]] = srcContent;
-    
+    msg.snippets[files[i]] = srcContent;   
 }
 
 return msg;
 ````
 
 #### get templates
-Genauso wie die Snippets speichern wir auch den Inhalt der Templates in unserem Flow zur späteren Verwendung.
+And another time to do the same for the templates and to store them as objects at `msg.templates`.
 
 ````js
 msg.templates = {};
@@ -233,10 +238,8 @@ return msg;
 ````
 
 #### create index.html
-Nun fangen wir an die Inhalte der einzelnen Dateien zu generieren, den Start macht unsere `index.html` Datei.
-Die obere Hälfte des Codes betrifft das generieren der Meta Tags für Social Media und Suchmaschinen.
-Im zweiten Block fügen wir in die Platzhalter des Templates die Werte Snippets, den Seitentitel, sowie die Metadaten ein.
-Letztlich steht unsere fertige `index.html` als Objekt `msg.dist.index` in unserem Flow bereit um später als Datei geschrieben zu werden.
+Now we can start to prepare our HTML files for output. First we go with `index.html`, where at first we generate and insert the pages specific meta data and then replace the placeholders of the template by the content of our snippets.
+Also we set a page title to finally save the generated content as `msg.dist.index` which later will be used to write our `index.html` file.
 
 ````js
 msg.dist.index = "";
@@ -268,8 +271,8 @@ return msg;
 ````
 
 #### create 404.html
-Die `404.html`ist schnell zusammen gebaut. wir fügen alle Snippets in unser Template ein und geben der Seite einen Namen.
-Abschließend steht unser Objekt als `msg.dist.errorpage` zur Verfügung.
+The generation of our error pages content is done quickly. Again we insert the content of the snippets and set a page title.
+All of that then can be used to write `404.html` from  `msg.dist.errorpage` later.
 
 ````js
 msg.dist.errorpage = "";
@@ -284,7 +287,7 @@ return msg;
 ````
 
 #### create privacy-policy.html
-Genauso ein "Low-Brainer" ist die Seite mit Datenschutz und Impressum und schnell als `msg.dist.privacy` aufbereitet.
+Same thing concerning the data privacy page which we provide as `msg.dist.privacy` object by following script.
 
 ````js
 msg.dist.privacy = "";
@@ -299,7 +302,7 @@ return msg;
 ````
 
 #### create search.html
-Bevor es wieder ein wenig komplizierter wird, zunächst noch die einfach Erzeugung des Objekts `msg.dist.searchindex` zur späteren Verwendung.
+Before getting a bit more complex the simple generation of the `msg.dist.searchindex` object, which holds the content of our search page.
 
 ````js
 msg.dist.search = "";
@@ -314,7 +317,7 @@ return msg;
 ````
 
 #### create search index.json
-Um den Suchindex aufzubauen, der später eine Suche ermöglicht ohne eine Abfrage an den Server zu stellen, verwenden ich eine `for` Schleife die durch alle Elemente im Array `msg.posts` läuft und für jeden Beitrag einen Eintrag im Index als JSON Objekt erzeugt. Letztlich wird der Index als Objekt `msg.dist.searchindex` bereit gestellt.
+Now we want to build up our search index, which as mentioned before, is created to allow our visitor to search our blogs content without starting individual server requests. To create that index as `msg.dist.searchindex` for writing at later as `index.json` we use a for loop which goes through all elements of `msg.posts` (our posts) and store them as json object.
 
 ````js
 var alength = msg.posts.length;
@@ -332,7 +335,7 @@ return msg;
 ````
 
 #### create sitemap.xml
-Bei der Erzeugung der Sitemap gehen wir ähnlich vor wie beim Suchindex. Anstelle einer klassischen `for` Schleife verwende ich die Javascript `forEach()` Funktion, die im Endeffekt das gleiche bewirkt, nur etwas moderner ist.
+Similar to the search index is the creation of our sitemap. Instead of a for loop here we use the `forEach()` function, which basically is doing the same but a bit more nice and modern in many aspects.
 
 ````js
 var xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -357,7 +360,6 @@ xml = xml + `
 msg.dist.sitemap = xml;
 return msg;
 
-
 function postxml(item) {
      if (item.published == true ) {
         xml = xml + `
@@ -369,8 +371,8 @@ function postxml(item) {
 }
 ````
 
-#### create posts
-Wir haben zur im `get posts` Node bereits den Inhalt der einzelnen Posts im Array `msg.posts` konvertiert und bereit gestellt. Jetzt wollen wir dies noch dahingehend finalisieren, dass wir analog zu den zuvor erzeugten Dateien auch für jeden Post eine einzelne Datei erzeugen können und lege diese wiederum als Objekt im Objekt `msg.dist.posts` ab.
+#### create 
+While we already created the content of our posts and stored it at array `msg.posts`, we still need to extend them to add the snippets data as well as the social media tags to each one of them.  Once done each post is available as an object in object `msg.dist.posts`.
 
 ````js
 msg.dist.posts = {};
@@ -389,7 +391,6 @@ for (var i=0; i<alength; i++) {
     }
     
     img = msg.posts[i].imgurl.split('.')[0]+".webp";
-    
     
     ogmeta = `
     <meta property="og:type" content="website">
@@ -411,13 +412,10 @@ for (var i=0; i<alength; i++) {
     
     data = "";
     data = msg.templates["post.html"];
-
-
     data = data.replace("<!-- html head from head.html snipppet -->",msg.snippets["head.html"]);
     data = data.replace("<!-- Top Navigation from navbar.html snipppet -->",msg.snippets["navbar.html"]);
     data = data.replace("<!-- footer navigation from footer.html snipppet -->",msg.snippets["footer.html"]);
     data = data.replace("<!-- Javascript from script.html snipppet -->",msg.snippets["script.html"]);
-
     data = data.replace("<!-- mardown content from posts -->",msg.posts[i].distContent);
     data = data.replace("<!-- Post Headline -->", msg.posts[i].title);
     data = data.replace("<!-- postdate -->", postdate);
@@ -432,11 +430,12 @@ return msg;
 ````
 
 #### create blog.html
-Nun unser letzter vorbereitender Streich, die Erzeungung der Übersicht aller Posts im Objekt `msg.dist.blog`.
-Es ist am Umfang der Funktion ersichtlich, dass hier etwas mehr als bei den anderen Dateien passiert.
-Zuerst sammeln wir alle definierten Kategorien aus den einzelnen Posts über eine for Schleife ein um dann doppelt vorhandene Werte wieder aus dem erzeugtem Array zu löschen. Das brauchen wir damit die Besucher unserer Website später über Kategorien filtern können. Jede Kategorie bekommt außerdem eine eindeutige Farbe, die einer CSS Klasse in unserem Stylesheet entspricht, zugeordnet. 
-Als nächstes extrahieren wir aus den Metadaten der Posts noch Titel, Kurzbeschreibung, Datum und Bild. Während dieser for-Schleife verhindert eine if-Bedingung, dass wir unveröffentliche Posts zur Auswahl aufbereiten.
-Abschließend erzeugen wir aus den ermittelten Werten den entsprechenden HTML Code, fügen die Daten der Snippets ein, ergänzen die Meta Informationen zur Seite und schreiben das Ganze in das Objekt `msg.dist.blog`.
+Before being able to finally writing all the generated files to hard disk, we still need to take care of our blog page.
+As you can see the function contains a little bit more action then most of the other functions.
+Basically we loop through all posts to catch the categories defined in their meta data and store them as an array.
+Then we remove any douplicate entries from that array. At the next step we assign a color to each category which are also defined in our frontend "style.css" file.
+We also have to extract the Meta Data of each post to create their previews: the title, the description, the create date and the preview image. Here we also have an if statements to avoid not published posts will be considered.
+The rest is as before, we set the meta data of the page and inject the data of the snippets to finally store all of that as object  `msg.dist.blog`.
 
 ````js
 //get categories from all posts and extract unique ones
@@ -458,7 +457,6 @@ var c=0;
       colorcat[key] = catcolors[c];
       c = c+1;
  }
-       
 
 //generate and set html for categorie selection
 var cathtml = "";
@@ -543,14 +541,12 @@ return msg;
 ````
 
 #### write files
-Jetzt wollen wir endlich unsere mühevoll erzeugten Objekte in `msg.dist` als reale Dateien festschreiben.
-In unserer Funktion "write files" binden wir dafür wieder das npm modul `fs-extra` als `fse` ein.
-Alle erzeugten Dateien sollem im Verzeichnis `/dist/` landen. Gleichzeitig wollen wir auch alle spuren vorheriger Deployments löschen, damit uns "Dateileichen" und ähnliche nicht zu Inkonsitenzen führen.
-Das den fse Funktionen vorangestellte `await` stellt eine sequentielle Ausführung der einzelnen Schritte sicher, in dem es wartet bis der jeweilige Aufruf auch komplett abgeschlossen ist.
-Also wird in der Funktion im ersten Schritt das Verzeichnes `/dist` komplett geleert und dann alle benötigten Unterordner wieder leer erstellt.
-Als nächstes kopieren wir unsere Assets von `/src/assets/` nach `/dist/assets/` und machen das Gleiche mit der `robots.txt` Datei.
-Anschließend schreiben wir die Inhalte der Objekte in `msg.dist` in die jeweilige Datei fest, um dann in einer Schleife durch alle Posts zu gehen und diese ebenfalls in das Dateisystem zu schreiben.
-
+Now, we want to write all the generated objects at `msg.dist` to files.
+To do so the function "write files" is also using npm package `fs-extra`as `fse`.
+After a general cleanup of target directoy `/dist`, to avoid any inconsistencies, we create the basic file structure.
+By utilization of the "await" command we ensure the creation of those directories is finished before moving forward to the next steps.
+Then we copy all of our assets from `/src/assets/` to `/dist/assets/`, same as we do regarding the `robots.txt` file.
+Last step is to create all the files and each post file, based on it's objects name (key) by a loop, from `msg.dist`.
 
 ````js
 await fse.emptyDir('/dist').then(() => {
@@ -582,14 +578,16 @@ return msg;
 ````
 
 #### convert media files
-Noch etwas komplexer ist die Erzeugung der Mediendatein. Die Dateien aus dem Verzeichnis `/src/media/`und einer Unterordnerebene tiefer, wollen wir ins Speicher sparende `.webp` Format konvertieren und zusätzlichen jeweils einen Thumbnail in geringerer Auflösung generieren. Außerdem wollen wir das nur Medien mit den Quellformaten .jpg, .jpeg, .png oder .gif konvertiert werden. Alle anderen Dateien werden ohne Änderung direkt nach `/dist/media/full/` kopiert. Um uns die Arbeit zu erleichten greifen wir auf die npm Module `fs-extra` als `fse` und `sharp` zurück.
-Man beachte auch, das ich das `await` Kommando bewusst bei der Erzeugung der Dateien ausspare, so dass die Schleifen bereits mit der nächsten Datei aus ihren Arrays starten, bevor die Schreiboperation abgeschlossen ist. Das beschleunigt das Deployment um einen sehr großen Faktor, bei dem geringen Risiko bzw. dem akzeptieren Umstand, dass eine Mediendatei noch nicht geschrieben/verfügbar ist, wenn das Deplyoment abgeschlossen ist.
+
+A bit of complexity is also existing regarding our media files used mostly for posts. I wrote a small media manager which converts the source file in several output formats. That is done by create a thumbnail, a space saving `.webp` file and a copy of the original file from `/src/media/` to `/dist/media/thumb/`, `/dist/media/full/`, `/dist/media/orig`. That is done for all files of type ".gif", ".jpg", ".jpeg" and ".webp". All other files are just copied without thumbnail generation or conversion.
+To do so we use npm modules `fs-extra` and `sharp`.
+Additionally to mention is that we do not use `await` since file creation can take some seconds, which would lead to a longer depyloyment time. Instead these operations are running in background and continue after deplyoment is "officially" finished. That's a bit tricky and maybe will be changed back in regular usage of nCMS.
 
 ````js
 var srcpath = '/src/media/';
 var fullpath = '/dist/media/full/';
 var thumbpath = '/dist/media/thumb/';
-const filetypes = ["jpg", "jpeg", "png", "gif"];
+const filetypes = ["jpg", "jpeg", "png", "gif", "webp"];
 const mediafiles = fse.readdirSync(srcpath);
 const alength = mediafiles.length;
 var mediafile = "";
@@ -639,7 +637,9 @@ return msg;
 ````
 
 #### finish
-Unser Deployment nähert sich dem Ende. Wir errechnen noch die Dauer des Deployments und setzen einen Zeitstempel um diese Informationen in der Datei `/dist/deploy.log` festzuhalten. Die Datei wird dann wieder mit dem npm Modul `fs-extra` als `fse` geschrieben. Je nach Auslöser des Depyloyments, also manuell vs. webhook, wird dann abschließnd an ein Debug Node oder an den Debug Node und einen http-out Node weitergeleitet.
+We are nearly done. at the "finsih" node we just calculate the duration of each deployment and create a timestamp.
+Both information are written to file `/dist/deploy.log`, which is accessed by the frontend to show its data at the console log of the visitors browser.
+Depending if the deployment is requested manually or via webhook, we output the results to both or just one of the following nodes.
 
 ````js
 var endtime = Date.now();
@@ -663,31 +663,35 @@ if (msg.type != "manual") {
 ````
 
 #### msg & http
-Fertig! Die Beiden Nodes `msg` und `http` dienen zum sauberen Abschluss unseres Deployments.
-Der "http out" Node liefert den zuvor definierten Body als Nachricht zurück an den aufrufenden Webhook.
+Finally we are done. Both nodes "msg" and "http" just exist to have a clean ending of our deployment.
+The "http out" is used to provide the deployment infos as feedback if the deployment was called via webhook.
+
 ![ncms_pageload](/media/full/ncms/ncms_webhook.webp)
-Der "msg" Debug Node zeigt uns den kompletten Inhalt des Deployments im Debugger von Node-Red an, wenn aktiviert.
+
+While the "msg" debug node shows us the output of the msg object of our flow.
+
 ![ncms_pageload](/media/full/ncms/ncms_debug.webp)
 
 
-Den kompletten Node-Red Flow könnt ihr euch auch hier herunterladen https://niklas-stephan.de/media/full/ncms/ncms_flow.json  (Version 0.61).
+You can download the complete, and already a bit corrected/modified Node-Red flow here: https://niklas-stephan.de/media/orig/ncms/flow.json  (Version 0.60).
 
-## Fazit
-Zugegeben, hätte ich eine Stoppuhr genutzt um aufzuzeichnen wie lange die Entwicklung von NCMS gedauert hat, vermutlich hätte ich irgendwann abgebrochen. Aber von Start bis Ende des Projekts, ganz wie bei einem rundenbasierten Strategiespiel, war regelmäßig der "nur diese eine Sache noch" Moment da. Eine Menge Spaß hat es außerdem gemacht, mit Hilfe von Node-Red immer ausgefeiltere JavaScript Funktionen zu entwickeln. Der fest integrierte Debugger war dabei eine fast genauso große Hilfe, wie die Möglichkeit in Node-Red Funktionen maximal einfach auf weitere node.js Module zuzugreifen. Falls ihr mal eine ähnliches Vorhaben umsetzen möchtet, könnt ihr gerne meine Quellen Auf Github "Forken".
-Einige verbesserungswürde Schwachstellen gibt es natürlich auch noch.
-Zum Beispiel an den Stellen, bei denen ich im Node-Red Backend auf das Frontend referenziere. Das macht das Ganze etwas weniger flexibel, denn wenn wirklich mal jemand meine Quellen nutzen möchte, müsste sie/er sich entsprechend noch in das Frontend einarbeiten.
-Und überhaupt bin ich hier im Artikel nicht auf das HTML5 Frontend mit javascript Funktionen, CSS und HTML weiter eingegangen.
-Vielleicht folgt das ein andernmal.
+## Conclusion
+I have to admit the whole project was a bit time consuming. But from start until the end I was driven and excited by the thought "just this one more little thing". Additonally I had a lot of fun using Node-Red to create and optimize into more and more advanced functions. The integrated debugger and the nice GUI are extremly helpfull, to find errors and to keep overview at any time.
+The, at least to me, new feature to easily utilize additional node.js modules inside my own functions made the trick for me. Otherwise I would have not been able to provide the same outcome or at least not that advanced and straight forward way it is, now.
+If you every plan to do similar you are welcome to fork my project or to catch some ideas.
+For sure nCMS is still not perfect.
+For example all the references to the frontend inside my functions make it hard to read and understand for others.
+Actually the fronted code and its functions, css and html has not really been mentioned in my post at all. Maybe I can do that another time.
 
-## Quellen / Weiterführende Links
-Hier nochmal alle Quellen, Links und Dateien aus dem Artikel zusammen aufgeführt:
+## Sources / Links
+Here a summary of most of the sources, links and files I mentioned in my post:
 
-- Die Quellen von NCMS bei Github: https://github.com/handtrixx/ncms 
-- Der Node-Red Flow von NCMS: https://niklas-stephan.de/media/full/ncms/ncms_flow.json
-- Das fantastastische Node-Red: https://nodered.org/ 
-- Node-Red als Container bei Docker Hub: https://hub.docker.com/r/nodered/node-red
+- nCMS at Github: https://github.com/handtrixx/ncms 
+- Node-Red Flow used for nCMS: https://niklas-stephan.de/media/orig/ncms/flow.json
+- The amazing Node-Red: https://nodered.org/ 
+- Node-Red as Container at Docker Hub: https://hub.docker.com/r/nodered/node-red
 - Ngnix Proxy Manager: https://nginxproxymanager.com/
-- Das famose Bootstrap HTML5 Template von Twitter: https://getbootstrap.com/ 
-- markdown-it - von Markup nach HTML in einfach: https://markdown-it.github.io/ 
-- Dateisystemoperation in node.js mit fs-extra: https://github.com/jprichardson/node-fs-extra
-- Rasend schnelle Konvertierung von Bildern in node.js mit sharp: https://sharp.pixelplumbing.com/ 
+- The Bootstrap HTML5 template created by Twitter: https://getbootstrap.com/ 
+- markdown-it - Markup to HTML in an easy manner: https://markdown-it.github.io/ 
+- file operations in node.js with fs-extra: https://github.com/jprichardson/node-fs-extra
+- ultra fast image conversion in node.js with sharp: https://sharp.pixelplumbing.com/ 

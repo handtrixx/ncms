@@ -2,10 +2,10 @@
 {
 "title": "Scientific researches at home with BOINC",
 "filename": "Rechenkraft_fuer_die_Wissenschaft_en.md",
-"imgurl":"boinc.png",
-"keywords": ["IoT"],
+"imgurl":"boinc/boinc_certificate_2022-04-01.png",
+"keywords": ["Projekte"],
 "language": "en",
-"date":"2021-01-31",
+"date":"2022-04-01",
 "published":true,
 "excerpt":"You are a big fan of science? You have a computer or a server? Then feel free to contribute in one or many projects just by donating some of yours PC's CPU power."
 }

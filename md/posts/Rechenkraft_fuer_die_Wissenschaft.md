@@ -2,10 +2,10 @@
 {
 "title": "Rechenkraft für die Wissenschaft mit BOINC",
 "filename": "Rechenkraft_fuer_die_Wissenschaft.md",
-"imgurl":"boinc.png",
-"keywords": ["IoT"],
+"imgurl":"boinc/boinc_certificate_2022-04-01.png",
+"keywords": ["Projekte"],
 "language": "de",
-"date":"2021-01-31",
+"date":"2022-04-01",
 "published":true,
 "excerpt":"In diesem Artikel berichte ich darüber, was Boinc eigentlich ist und wie man es einfach installieren kann."
 }

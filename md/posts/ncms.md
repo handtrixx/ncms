@@ -1,11 +1,11 @@
 ---
 {
-"title": "Noch ein WCMS? Warum nicht!",
+"title": "Noch ein Web Content Management System?! Ich stelle vor: nCMS",
 "filename": "ncms.md",
 "imgurl":"ncms/ncms_logo.png",
 "keywords": ["Projekte"],
 "language": "de",
-"date":"2022-04-10",
+"date":"2022-04-15",
 "published":true,
 "excerpt":"Warum sollte man sein eigenes Web Content Management System (WCMS) erstellen wollen, es gibt doch schon hunderte?!"
 }
@@ -123,14 +123,14 @@ Node-Red basiert auf node.js und erlaubt uns in einer Art Ablaufdiagramm verschi
 
 ![ncms_node-red-flow](/media/full/ncms/ncms_node-red-flow.webp)
 
-Im folgenden kurz Erläuterung zu den einzelen Nodes.
+Im folgenden eine Erläuterung zu den einzelen Nodes.
 
 #### /deploy
 Hierbei handelt sich um einen lauschenden `http in` Node, um den Start eines Deplyoments durch einen Webhook zu starten. D.h. z.B. durch `curl -X POST -d 'key=----' https://ncms.niklas-stephan.de/deploy` startet man das Deployment.
 
 #### catch key
 Natürlich soll nicht einfach jeder ein Deployment starten können, deshalb noch eine kleine Sicherheitsabfrage im `catch key` Node.
-Im Node unter "Setup" wird das npm modul `fs-extra` geladen und als `fse` bereit gestellt, damit wir Zugriff auf das Dateisystem haben und den im Ordner `/data` hinterlegten key mit dem vergleichen können, der uns für das Deployment im Webhook zur Verfügung gestellt wurde.
+Im Node unter "Setup" wird das npm Modul `fs-extra` geladen und als `fse` bereit gestellt, damit wir Zugriff auf das Dateisystem haben und den im Ordner `/data` hinterlegten key mit dem vergleichen können, der uns für das Deployment im Webhook zur Verfügung gestellt wurde.
 Die Funktion selbst sieht dann so aus:
 
 ````js
@@ -150,7 +150,7 @@ if (transferedKey == systemKey) {
     
 }
 ````
-Auch hat dieser Node 2 Ausgänge. Falls die beiden keys übereinstimmen wird mit dem Deployment fortgefahren - Ausgang 1. Falls aber nicht, dann wird eine Fehlernachricht an Ausgang 1 übergeben und das Deployment damit abgebrochen.
+Auch hat dieser Node 2 Ausgänge. Falls die beiden keys übereinstimmen wird mit dem Deployment fortgefahren - Ausgang 2. Falls aber nicht, dann wird eine Fehlernachricht an Ausgang 1 übergeben und das Deployment damit abgebrochen.
 
 #### deploy
 Startet das Deployment ebenfalls, aber eben manuell über die Node-Red Oberfläche und nicht als Webhook.
@@ -585,7 +585,7 @@ Man beachte auch, das ich das `await` Kommando bewusst bei der Erzeugung der Dat
 var srcpath = '/src/media/';
 var fullpath = '/dist/media/full/';
 var thumbpath = '/dist/media/thumb/';
-const filetypes = ["jpg", "jpeg", "png", "gif"];
+const filetypes = ["jpg", "jpeg", "png", "gif", "webp"];
 const mediafiles = fse.readdirSync(srcpath);
 const alength = mediafiles.length;
 var mediafile = "";
@@ -666,11 +666,11 @@ Der "msg" Debug Node zeigt uns den kompletten Inhalt des Deployments im Debugger
 ![ncms_pageload](/media/full/ncms/ncms_debug.webp)
 
 
-Den kompletten Node-Red Flow könnt ihr euch auch hier herunterladen https://niklas-stephan.de/media/full/ncms/ncms_flow.json  (Version 0.61).
+Den kompletten Node-Red Flow könnt ihr euch auch hier herunterladen https://niklas-stephan.de/media/orig/ncms/flow.json (Version 0.60).
 
 ## Fazit
-Zugegeben, hätte ich eine Stoppuhr genutzt um aufzuzeichnen wie lange die Entwicklung von NCMS gedauert hat, vermutlich hätte ich irgendwann abgebrochen. Aber von Start bis Ende des Projekts, ganz wie bei einem rundenbasierten Strategiespiel, war regelmäßig der "nur diese eine Sache noch" Moment da. Eine Menge Spaß hat es außerdem gemacht, mit Hilfe von Node-Red immer ausgefeiltere JavaScript Funktionen zu entwickeln. Der fest integrierte Debugger war dabei eine fast genauso große Hilfe, wie die Möglichkeit in Node-Red Funktionen maximal einfach auf weitere node.js Module zuzugreifen. Falls ihr mal eine ähnliches Vorhaben umsetzen möchtet, könnt ihr gerne meine Quellen Auf Github "Forken".
-Einige verbesserungswürde Schwachstellen gibt es natürlich auch noch.
+Zugegeben, hätte ich eine Stoppuhr genutzt um aufzuzeichnen wie lange die Entwicklung von nCMS gedauert hat, vielleicht hätte ich irgendwann abgebrochen. Aber: von Start bis Ende des Projekts, ganz wie bei einem rundenbasierten Strategiespiel, war regelmäßig der "nur diese eine Sache noch" Moment da. Eine Menge Spaß hat es außerdem gemacht, mit Hilfe von Node-Red immer ausgefeiltere JavaScript Funktionen zu entwickeln. Der fest integrierte Debugger war dabei eine fast genauso große Hilfe, wie die Möglichkeit in Node-Red javascript Funktionen maximal einfach auf weitere node.js Module zuzugreifen. Falls ihr mal eine ähnliches Vorhaben umsetzen möchtet, könnt ihr gerne meine Quellen Auf Github forken.
+Einige verbesserungswürdige Schwachstellen gibt es natürlich auch noch.
 Zum Beispiel an den Stellen, bei denen ich im Node-Red Backend auf das Frontend referenziere. Das macht das Ganze etwas weniger flexibel, denn wenn wirklich mal jemand meine Quellen nutzen möchte, müsste sie/er sich entsprechend noch in das Frontend einarbeiten.
 Und überhaupt bin ich hier im Artikel nicht auf das HTML5 Frontend mit javascript Funktionen, CSS und HTML weiter eingegangen.
 Vielleicht folgt das ein andernmal.

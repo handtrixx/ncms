@@ -11,9 +11,12 @@ Link Frontend: https://niklas-stephan.de
 Link Github: https://github.com/handtrixx/ncms 
 
 ## Version
-version 0.59
+version 0.60
 
 ## Version Log & Features Included
+
+version 0.60
+- Fixing bug images not shown at social media share
 
 version 0.59
 - Deployed to Production
@@ -138,4 +141,3 @@ version 0.01
 - More Dynamic Page Titles
 - Translate posts from old website
 - if posts only exists in 1 language: show info instead of 404 error
-
