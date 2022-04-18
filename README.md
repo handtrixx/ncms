@@ -17,11 +17,11 @@ Instead you setup Node-Red, in best case in a docker environment (example: docke
 Then you import the flow which also can be found at /backend/flows.json.
 
 ## Version
-version 0.63
+version 0.64
 
 ## Version Log & Features Included
 
-version 0.63
+version 0.64
 - Included docker compose file at /src/backend/docker-compose.yml as an example config
 
 version 0.62
