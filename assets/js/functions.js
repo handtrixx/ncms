@@ -138,13 +138,27 @@ function translate() {
     if (langids.length > 0) {
         const json = fetch("/assets/json/langkeys.json", myInit).then(response => response.json())
         .then(function(json) {
+            const langdata = document.querySelectorAll("[data-langval]");
+
+            langdata.forEach(el=>{
+                for (var h=0; h<json.length; h++) {
+                    if (el.dataset.langval == json[h].id) {
+                        if (lang == "de") {
+                            el.innerHTML = json[h].deval;
+                        } else {
+                            el.innerHTML = json[h].enval;
+                        }
+
+                    }
+                }
+            })
+
             for (var i=0; i<langids.length; i++) {
               for (var j=0; j<json.length; j++) {
                 if (json[j].id == langids[i].id ) {
                     if (lang == "de") {
                         document.getElementById(langids[i].id).innerHTML = json[j].deval;
                     } else {
-
                         document.getElementById(langids[i].id).innerHTML = json[j].enval;
                     }
                 }

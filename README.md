@@ -11,9 +11,15 @@ Link Frontend: https://niklas-stephan.de
 Link Github: https://github.com/handtrixx/ncms 
 
 ## Version
-version 0.60
+version 0.62
 
 ## Version Log & Features Included
+
+version 0.62
+- Included automated copy of latest Node-Red flow to /src/nodered/flows.json 
+
+version 0.61
+- Translataion of categories by id and new langval data attribute
 
 version 0.60
 - Fixing bug images not shown at social media share
@@ -135,9 +141,7 @@ version 0.01
 - Prototype
 
 ## Todo's
-- Translate categories
 - Optional CMS backend for frontend editing
-- Include node-red flows to src
 - More Dynamic Page Titles
 - Translate posts from old website
 - if posts only exists in 1 language: show info instead of 404 error

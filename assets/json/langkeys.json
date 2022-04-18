@@ -193,6 +193,21 @@
     "id":"gdpr_confirm",
     "deval":"Zustimmen",
     "enval":"Confirm"
+},
+{
+    "id":"cat-Freizeit",
+    "deval":"Freizeit",
+    "enval":"Leisure"
+},
+{
+    "id":"cat-Projekte",
+    "deval":"Projekte",
+    "enval":"Projects"
+},
+{
+    "id":"cat-Alle",
+    "deval":"Alle",
+    "enval":"All"
 }
 ]
 

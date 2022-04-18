@@ -1,0 +1,620 @@
+[
+    {
+        "id": "87631f97363e48c7",
+        "type": "tab",
+        "label": "ncms",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2528f7fd0f2bdf88",
+        "type": "tab",
+        "label": "old",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "dd413ea591991503",
+        "type": "debug",
+        "z": "87631f97363e48c7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "be27b0b7fd3ced9b",
+        "type": "inject",
+        "z": "87631f97363e48c7",
+        "name": "deploy",
+        "props": [
+            {
+                "p": "starttime",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "type",
+                "v": "manual",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 90,
+        "y": 100,
+        "wires": [
+            [
+                "e19080736764e008"
+            ]
+        ]
+    },
+    {
+        "id": "e19080736764e008",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "get posts",
+        "func": "msg.baseurl = \"https://niklas-stephan.de\"\nmsg.dist = {};\nmsg.posts = [];\nconst path = '/src/md/posts/';\nconst postfiles = fse.readdirSync(path)\nconst alength = postfiles.length;\n\nfor (var i=0; i<alength; i++) {\n    var srcFile = path+postfiles[i];\n    var distFilename = postfiles[i].split('.')[0]+\".html\";\n    var srcContent = fse.readFileSync(srcFile, 'utf8')\n    \n    var md = new markdownIt({\n        html: true,linkify: true,typographer: true,breaks: true})\n        .use(markdownItFrontMatter, function(metainfo) {meta = JSON.parse(metainfo);})\n        .use(markdownItLinkifyImages, {target: '_blank',linkClass: 'custom-link-class',imgClass: 'custom-img-class'})\n        .use(markdownItLinkAttributes, { attrs: {target: \"_blank\",rel: \"noopener\",}\n    });\n    \n    distContent = md.render(srcContent);\n\n    let data = {\"srcFile\":\"\"+srcFile+\"\",\"srcContent\":\"\"+srcContent+\"\",\"distContent\":\"\"+distContent+\"\",\"distFilename\":\"\"+distFilename+\"\",...meta};\n    \n    msg.posts.push(data)\n    //msg.topic = msg.postfiles[i].split('.')[0];\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "fse",
+                "module": "fs-extra"
+            },
+            {
+                "var": "markdownIt",
+                "module": "markdown-it"
+            },
+            {
+                "var": "markdownItFrontMatter",
+                "module": "markdown-it-front-matter"
+            },
+            {
+                "var": "markdownItLinkifyImages",
+                "module": "markdown-it-linkify-images"
+            },
+            {
+                "var": "markdownItLinkAttributes",
+                "module": "markdown-it-link-attributes"
+            }
+        ],
+        "x": 280,
+        "y": 100,
+        "wires": [
+            [
+                "7fcc4e08512322ba"
+            ]
+        ]
+    },
+    {
+        "id": "7fcc4e08512322ba",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "get snippets",
+        "func": "msg.snippets = {};\nconst path = '/src/snippets/';\nconst files = fse.readdirSync(path)\nconst alength = files.length;\n\nfor (var i=0; i<alength; i++) {\n    var srcFile = path+files[i];\n    var srcContent = fse.readFileSync(srcFile, 'utf8')\n    \n    msg.snippets[files[i]] = srcContent;\n    \n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "fse",
+                "module": "fs-extra"
+            }
+        ],
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [
+                "7cbeb80df4ed5ae0"
+            ]
+        ]
+    },
+    {
+        "id": "7cbeb80df4ed5ae0",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "get templates",
+        "func": "msg.templates = {};\nconst path = '/src/templates/';\nconst files = fse.readdirSync(path)\nconst alength = files.length;\n\nfor (var i=0; i<alength; i++) {\n    var srcFile = path+files[i];\n    var srcContent = fse.readFileSync(srcFile, 'utf8')\n    \n    msg.templates[files[i]] = srcContent;\n    \n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "fse",
+                "module": "fs-extra"
+            }
+        ],
+        "x": 620,
+        "y": 100,
+        "wires": [
+            [
+                "d47e5574099a7fee"
+            ]
+        ]
+    },
+    {
+        "id": "d47e5574099a7fee",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "create index.html",
+        "func": "msg.dist.index = \"\";\nvar ogmetalang = \"de_DE\";\nvar ogmeta = `\n<meta property=\"og:type\" content=\"website\">\n<meta property=\"og:locale\" content=\"`+ogmetalang+`\">\n<meta property=\"og:site_name\" content=\"niklas-stephan.de\">\n<link rel=\"canonical\" href=\"`+msg.baseurl+`/index.html\">\n<meta name=\"description\" content=\"Projekte und Posts aus der Welt von IoT, Musik und mehr\">\n<meta property=\"og:title\" content=\"Projects & Blog - niklas-stephan.de\">\n<meta property=\"og:description\" content=\"Projekte und Posts aus der Welt von IoT, Musik und mehr\">\n<meta property=\"og:url\" content=\"`+msg.baseurl+`/index.html\">\n<meta property=\"og:image\" content=\"`+msg.baseurl+`/media/orig/trailer.png\">\n<meta property=\"og:image:secure_url\" content=\"`+msg.baseurl+`/media/orig/trailer.png\">\n<meta name=\"twitter:card\" content=\"summary\">\n<meta name=\"twitter:description\" content=\"Projekte und Posts aus der Welt von IoT, Musik und mehr\">\n<meta name=\"twitter:title\" content=\"Projects & Blog - niklas-stephan.de\">\n<meta name=\"twitter:image\" content=\"`+msg.baseurl+`/media/orig/trailer.png\">\n<meta name=\"image\" property=\"og:image\" content=\"`+msg.baseurl+`/media/orig/trailer.png\">\n<meta name=\"author\" content=\"Niklas Stephan\">\n\n`\n\n\nmsg.dist.index = msg.templates[\"index.html\"].replace(\"<!-- html head from head.html snipppet -->\",msg.snippets[\"head.html\"]);\nmsg.dist.index = msg.dist.index.replace(\"<!-- Top Navigation from navbar.html snipppet -->\",msg.snippets[\"navbar.html\"]);\nmsg.dist.index = msg.dist.index.replace(\"<!-- footer navigation from footer.html snipppet -->\",msg.snippets[\"footer.html\"]);\nmsg.dist.index = msg.dist.index.replace(\"<!-- Javascript from script.html snipppet -->\",msg.snippets[\"script.html\"]);\nmsg.dist.index = msg.dist.index.replace(\"<!-- PAGE TITLE -->\",\"Home\");\nmsg.dist.index = msg.dist.index.replace(\"<!-- meta tags -->\",ogmeta);\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "842a9b678e6f8e46"
+            ]
+        ]
+    },
+    {
+        "id": "842a9b678e6f8e46",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "create 404.html",
+        "func": "msg.dist.errorpage = \"\";\n\nmsg.dist.errorpage = msg.templates[\"404.html\"].replace(\"<!-- html head from head.html snipppet -->\",msg.snippets[\"head.html\"]);\nmsg.dist.errorpage = msg.dist.errorpage.replace(\"<!-- Top Navigation from navbar.html snipppet -->\",msg.snippets[\"navbar.html\"]);\nmsg.dist.errorpage = msg.dist.errorpage.replace(\"<!-- footer navigation from footer.html snipppet -->\",msg.snippets[\"footer.html\"]);\nmsg.dist.errorpage = msg.dist.errorpage.replace(\"<!-- Javascript from script.html snipppet -->\",msg.snippets[\"script.html\"]);\nmsg.dist.errorpage = msg.dist.errorpage.replace(\"<!-- PAGE TITLE -->\",\"Page not found\");\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 160,
+        "wires": [
+            [
+                "5bafdec6b8222973"
+            ]
+        ]
+    },
+    {
+        "id": "5bafdec6b8222973",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "create privacy-policy.html",
+        "func": "msg.dist.privacy = \"\";\n\nmsg.dist.privacy = msg.templates[\"privacy-policy.html\"].replace(\"<!-- html head from head.html snipppet -->\",msg.snippets[\"head.html\"]);\nmsg.dist.privacy = msg.dist.privacy.replace(\"<!-- Top Navigation from navbar.html snipppet -->\",msg.snippets[\"navbar.html\"]);\nmsg.dist.privacy = msg.dist.privacy.replace(\"<!-- footer navigation from footer.html snipppet -->\",msg.snippets[\"footer.html\"]);\nmsg.dist.privacy = msg.dist.privacy.replace(\"<!-- Javascript from script.html snipppet -->\",msg.snippets[\"script.html\"]);\nmsg.dist.privacy = msg.dist.privacy.replace(\"<!-- PAGE TITLE -->\",\"Datenschutz & Impressum\");\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 160,
+        "wires": [
+            [
+                "46181a570e8c1654"
+            ]
+        ]
+    },
+    {
+        "id": "46181a570e8c1654",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "create search.html",
+        "func": "msg.dist.search = \"\";\n\nmsg.dist.search = msg.templates[\"search.html\"].replace(\"<!-- html head from head.html snipppet -->\",msg.snippets[\"head.html\"]);\nmsg.dist.search = msg.dist.search.replace(\"<!-- Top Navigation from navbar.html snipppet -->\",msg.snippets[\"navbar.html\"]);\nmsg.dist.search = msg.dist.search.replace(\"<!-- footer navigation from footer.html snipppet -->\",msg.snippets[\"footer.html\"]);\nmsg.dist.search = msg.dist.search.replace(\"<!-- Javascript from script.html snipppet -->\",msg.snippets[\"script.html\"]);\nmsg.dist.search = msg.dist.search.replace(\"<!-- PAGE TITLE -->\",\"Suche\");\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 160,
+        "wires": [
+            [
+                "44d1e4a62f92129f"
+            ]
+        ]
+    },
+    {
+        "id": "44d1e4a62f92129f",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "create search index.json",
+        "func": "var alength = msg.posts.length;\nvar index = \"[\";\n\nfor (var i=0; i<alength; i++) {\n    index = index+`{\"lang\":\"`+msg.posts[i].language+`\",\"link\":\"/posts/`+msg.posts[i].distFilename+`\",\"headline\":\"`+msg.posts[i].title+`\",\"content\":\"`+msg.posts[i].distContent.replace(/[^a-zA-Z0-9]/g, ' ')+`\"},`;\n}\nindex = index.slice(0, -1);\nindex = index+\"]\";\n\nmsg.dist.searchindex = index;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "2584c461ef2d6011"
+            ]
+        ]
+    },
+    {
+        "id": "29660e373a07cc6d",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "write files",
+        "func": "await fse.emptyDir('/dist').then(() => {\n    fse.mkdirSync('/dist/media');\n    fse.mkdirSync('/dist/media/full');\n    fse.mkdirSync('/dist/media/orig');\n    fse.mkdirSync('/dist/media/thumb');\n    fse.mkdirSync('/dist/posts');\n});\n\nawait fse.copySync('/src/assets/', '/dist/assets/');\nawait fse.copySync('/src/templates/robots.txt', '/dist/robots.txt');\nawait fse.copySync('/data/flows.json', '/src/nodered/ncms_flow.json');\n\nawait fse.writeFileSync('/dist/index.html', msg.dist.index);\nawait fse.writeFileSync('/dist/blog.html', msg.dist.blog);\nawait fse.writeFileSync('/dist/404.html', msg.dist.errorpage);\nawait fse.writeFileSync('/dist/privacy-policy.html', msg.dist.privacy);\nawait fse.writeFileSync('/dist/search.html', msg.dist.search);\nawait fse.writeFileSync('/dist/sitemap.xml', msg.dist.sitemap);\nawait fse.writeFileSync('/dist/searchindex.json', msg.dist.searchindex);\n\nconst postfilefolder = \"/dist/posts/\"\n\nawait Object.entries(msg.dist.posts).forEach(item => {\n  var [key, value] = item;\n  fse.writeFileSync(postfilefolder+key, value)\n});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "fse",
+                "module": "fs-extra"
+            }
+        ],
+        "x": 100,
+        "y": 300,
+        "wires": [
+            [
+                "ebad6b7adfa1d842"
+            ]
+        ]
+    },
+    {
+        "id": "2584c461ef2d6011",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "create sitemap.xml",
+        "func": "var xml = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\">\n    <url>\n        <loc>`+msg.baseurl+`/</loc>\n        <priority>1.00</priority>\n    </url>\n    <url>\n        <loc>`+msg.baseurl+`/index.html</loc>\n        <priority>0.80</priority>\n    </url>\n    <url>\n        <loc>`+msg.baseurl+`/blog.html</loc>\n        <priority>0.80</priority>\n    </url>`\n\nmsg.posts.forEach(postxml);\n\nxml = xml + `\n</urlset>`\nmsg.dist.sitemap = xml;\nreturn msg;\n\n\nfunction postxml(item) {\n     if (item.published == true ) {\n        xml = xml + `\n        <url>\n            <loc>`+msg.baseurl+`/posts/`+item.distFilename+`.html</loc>\n            <priority>0.64</priority>\n        </url>`\n     }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 220,
+        "wires": [
+            [
+                "6686aef40fee183a"
+            ]
+        ]
+    },
+    {
+        "id": "6686aef40fee183a",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "create posts",
+        "func": "msg.dist.posts = {};\nvar alength = msg.posts.length;\nvar data = \"\";\nvar ogmetalang = \"\";\nvar ogmeta = \"\";\nvar postdate = \"\";\n\nfor (var i=0; i<alength; i++) {\n    \n    if (msg.posts[i].language == \"de\") {\n       ogmetalang = \"de_DE\"  \n    } else {\n        ogmetalang = \"en_US\"  \n    }\n    \n    img = msg.posts[i].imgurl.split('.')[0]+\".webp\";\n    ogimg = msg.posts[i].imgurl;\n    \n    ogmeta = `\n    <meta property=\"og:type\" content=\"website\">\n    <meta property=\"og:locale\" content=\"`+ogmetalang+`\">\n    <meta property=\"og:site_name\" content=\"niklas-stephan.de\">\n    <link rel=\"canonical\" href=\"`+msg.baseurl+`/posts/`+msg.posts[i].language+`/`+msg.posts[i].distFilename+`\">\n    <meta name=\"description\" content=\"`+msg.posts[i].excerpt+`\">\n    <meta property=\"og:title\" content=\"`+msg.posts[i].title+`\">\n    <meta property=\"og:description\" content=\"`+msg.posts[i].excerpt+`\">\n    <meta property=\"og:url\" content=\"`+msg.baseurl+`/posts/`+msg.posts[i].language+`/`+msg.posts[i].distFilename+`\">\n    <meta property=\"og:image\" content=\"`+msg.baseurl+`/media/orig/`+ogimg+`\">\n    <meta property=\"og:image:secure_url\" content=\"`+msg.baseurl+`/media/orig/`+ogimg+`\">\n    <meta name=\"twitter:card\" content=\"summary\">\n    <meta name=\"twitter:description\" content=\"`+msg.posts[i].excerpt+`\">\n    <meta name=\"twitter:title\" content=\"`+msg.posts[i].title+`\">\n    <meta name=\"twitter:image\" content=\"`+msg.baseurl+`/media/orig/`+ogimg+`\">\n    <meta name=\"image\" property=\"og:image\" content=\"`+msg.baseurl+`/media/orig/`+ogimg+`\">\n    <meta name=\"author\" content=\"Niklas Stephan\">\n    `\n    \n    postdate = '<small class=\"c-gray pb-3\" id=\"postdate\">'+msg.posts[i].date+'</small>';\n    \n    data = \"\";\n    data = msg.templates[\"post.html\"];\n\n\n    data = data.replace(\"<!-- html head from head.html snipppet -->\",msg.snippets[\"head.html\"]);\n    data = data.replace(\"<!-- Top Navigation from navbar.html snipppet -->\",msg.snippets[\"navbar.html\"]);\n    data = data.replace(\"<!-- footer navigation from footer.html snipppet -->\",msg.snippets[\"footer.html\"]);\n    data = data.replace(\"<!-- Javascript from script.html snipppet -->\",msg.snippets[\"script.html\"]);\n\n    data = data.replace(\"<!-- mardown content from posts -->\",msg.posts[i].distContent);\n    data = data.replace(\"<!-- Post Headline -->\", msg.posts[i].title);\n    data = data.replace(\"<!-- postdate -->\", postdate);\n    data = data.replace(\"<!-- Post Image -->\", '<img src=\"/media/thumb/'+img+'\" class=\"img-fluid mb-2\" alt=\"postImage\">');\n    data = data.replace(\"<!-- PAGE TITLE -->\",msg.posts[i].title);\n    data = data.replace(\"<!-- meta tags -->\",ogmeta);\n    \n    msg.dist.posts[msg.posts[i].distFilename] = data;\n}\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 220,
+        "wires": [
+            [
+                "253e5cf03bc7323b"
+            ]
+        ]
+    },
+    {
+        "id": "ba15d81ab6aea560",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "finish",
+        "func": "var endtime = Date.now();\nvar duration = endtime-msg.starttime;\nduration = duration;\nlet yourDate = new Date()\nvar depdate = yourDate.toISOString()//.split('T')[0]\n\nvar log = \"Deployment duration: \"+duration+\" ms \\n\";\nlog = log+\"Deployment timestamp: \"+depdate+\"\\n\";\nmsg.statusCode = 200;\n\nfse.writeFileSync('/dist/deploy.log', log);\nmsg.payload = log;\n\nif (msg.type != \"manual\") {\n    return [msg,msg];\n} else {\n    return [msg,null];\n}\n\n\n\n\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "fse",
+                "module": "fs-extra"
+            }
+        ],
+        "x": 430,
+        "y": 300,
+        "wires": [
+            [
+                "dd413ea591991503"
+            ],
+            [
+                "485dc8e14c35e3ca"
+            ]
+        ]
+    },
+    {
+        "id": "253e5cf03bc7323b",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "create blog.html",
+        "func": "//get categories from all posts and extract unique ones\nvar categories = [];\nfor (var i=0 ; i<msg.posts.length;i++) {\n    if (msg.posts[i].published == true) {\n        for (var j = 0; j < msg.posts[i].keywords.length; j++) {\n            categories.push(msg.posts[i].keywords[j]);\n        }\n    }\n}\nvar uniqueCategories = [...new Set(categories)];\n\n// define a color to stick for each category\nconst colorcat = {};\nvar catcolors = [\"green\", \"purple\",\"indigo\", \"red\", \"pink\"];\nvar c=0;\n for (const key of uniqueCategories) {\n      colorcat[key] = catcolors[c];\n      c = c+1;\n }\n       \n\n//generate and set html for categorie selection\nvar cathtml = \"\";\nfor (var k = 0; k < uniqueCategories.length; k++) {\n    \n    cathtml = cathtml + `<button type=\"button\"  \n    onclick=\"sort()\" data-filter=\".cat-`+uniqueCategories[k]+`\" class=\"langkey btn bg-` + catcolors[k] + ` c-white me-2 mb-3\" id=\"cat-`+uniqueCategories[k]+`\">\n    `+uniqueCategories[k]+`</button>`;\n}\nmsg.dist.blog = msg.templates[\"blog.html\"].replace(\"<!-- CATEGORIES -->\", cathtml);\n\n\n// get card content from all posts and generate html\nvar posthtml = \"\";\nfor (var l = 0; l < msg.posts.length; l++) {\n    if (msg.posts[l].published == true) {\n        \n    var link = msg.posts[l].filename.slice(0, -3)+\".html\";\n    \n    //get color for current post\n    var postcolor = \"\";\n    for (const key in colorcat) {\n        if (key == msg.posts[l].keywords[0]) {\n            postcolor = colorcat[key];\n        }\n    }\n    \n    imgurl = msg.posts[l].imgurl.split('.')[0]+\".webp\";\n\n    \n    posthtml = posthtml + `\n    <div class=\"col-sm-6 col-lg-4 my-4 filterDiv cat-`+msg.posts[l].keywords[0]+` lang-`+ msg.posts[l].language + `\">\n        <span class=\"date hidden d-none\">`+ msg.posts[l].date + `</span>\n        <span class=\"name hidden d-none\">`+ msg.posts[l].title + `</span>\n        <div onclick=\"goto('`+ link+ `','blog')\" class=\"card h-100 d-flex align-items-center bo-`+postcolor+`\">\n            <div class=\"langkey card-header bg-`+ postcolor + `\" data-langval=\"cat-`+msg.posts[l].keywords[0]+`\">` + msg.posts[l].keywords[0] + `</div>\n            <div class=\"card-img-wrapper d-flex align-items-center\">\n                <img src=\"media/thumb/`+ imgurl + `\"\n                    class=\"card-img-top\" alt=\"iot\">\n            </div>\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">`+ msg.posts[l].title + `</h5>\n                <p class=\"card-text\">\n                    `+ msg.posts[l].excerpt + `\n                </p>\n            </div>\n            <div class=\"card-footer small text-center c-gray pdate\">\n                `+msg.posts[l].date+`\n            </div>\n        </div>\n    </div>\n    `;\n    }\n}\n\nmsg.dist.blog = msg.dist.blog.replace(\"<!-- POSTS -->\", posthtml);\n\nvar ogmetalang = \"de_DE\";\nvar ogmeta = `\n<meta property=\"og:type\" content=\"website\">\n<meta property=\"og:locale\" content=\"`+ogmetalang+`\">\n<meta property=\"og:site_name\" content=\"niklas-stephan.de\">\n<link rel=\"canonical\" href=\"`+msg.baseurl+`/blog.html\">\n<meta name=\"description\" content=\"Projekte und Posts aus der Welt von IoT, Musik und mehr\">\n<meta property=\"og:title\" content=\"Projects & Blog - niklas-stephan.de\">\n<meta property=\"og:description\" content=\"Projekte und Posts aus der Welt von IoT, Musik und mehr\">\n<meta property=\"og:url\" content=\"`+msg.baseurl+`/blog.html\">\n<meta property=\"og:image\" content=\"`+msg.baseurl+`/media/orig/trailer.png\">\n<meta property=\"og:image:secure_url\" content=\"`+msg.baseurl+`/media/orig/trailer.png\">\n<meta name=\"twitter:card\" content=\"summary\">\n<meta name=\"twitter:description\" content=\"Projekte und Posts aus der Welt von IoT, Musik und mehr\">\n<meta name=\"twitter:title\" content=\"Projects & Blog - niklas-stephan.de\">\n<meta name=\"twitter:image\" content=\"`+msg.baseurl+`/media/orig/trailer.png\">\n<meta name=\"image\" property=\"og:image\" content=\"`+msg.baseurl+`/media/orig/trailer.png\">\n<meta name=\"author\" content=\"Niklas Stephan\">\n`\n\nmsg.dist.blog = msg.dist.blog.replace(\"<!-- meta tags -->\",ogmeta);\n\n\nmsg.dist.blog = msg.dist.blog.replace(\"<!-- html head from head.html snipppet -->\",msg.snippets[\"head.html\"]);\nmsg.dist.blog = msg.dist.blog.replace(\"<!-- Top Navigation from navbar.html snipppet -->\",msg.snippets[\"navbar.html\"]);\nmsg.dist.blog = msg.dist.blog.replace(\"<!-- footer navigation from footer.html snipppet -->\",msg.snippets[\"footer.html\"]);\nmsg.dist.blog = msg.dist.blog.replace(\"<!-- Javascript from script.html snipppet -->\",msg.snippets[\"script.html\"]);\nmsg.dist.blog = msg.dist.blog.replace(\"<!-- PAGE TITLE -->\",\"Projekte & Blog\");\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 220,
+        "wires": [
+            [
+                "29660e373a07cc6d"
+            ]
+        ]
+    },
+    {
+        "id": "0e7a67cdea5d5e91",
+        "type": "http in",
+        "z": "87631f97363e48c7",
+        "name": "/deploy",
+        "url": "/deploy",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 70,
+        "y": 40,
+        "wires": [
+            [
+                "a98ef41b71026f20"
+            ]
+        ]
+    },
+    {
+        "id": "a98ef41b71026f20",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "catch key",
+        "func": "const transferedKey = msg.payload.key;\nconst systemKey = fse.readFileSync('/data/deploy.key', 'utf8')\n\nif (transferedKey == systemKey) {\n    msg.payload = \"Deployment Started\";\n    msg.statusCode = 200;\n    msg.type = \"webhook\";\n    msg.starttime = Date.now();\n    return [null,msg];\n} else {\n    msg.payload = \"Wrong authentication!\"\n    msg.statusCode = 400;\n    return [msg,null];\n    \n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "fse",
+                "module": "fs-extra"
+            }
+        ],
+        "x": 200,
+        "y": 40,
+        "wires": [
+            [
+                "1549da7634b346aa"
+            ],
+            [
+                "e19080736764e008"
+            ]
+        ]
+    },
+    {
+        "id": "1549da7634b346aa",
+        "type": "http response",
+        "z": "87631f97363e48c7",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "content-type": "text/plain"
+        },
+        "x": 410,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "485dc8e14c35e3ca",
+        "type": "http response",
+        "z": "87631f97363e48c7",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "content-type": "text/plain"
+        },
+        "x": 570,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "ebad6b7adfa1d842",
+        "type": "function",
+        "z": "87631f97363e48c7",
+        "name": "convert media files",
+        "func": "var srcpath = '/src/media/';\nvar fullpath = '/dist/media/full/';\nvar origpath = '/dist/media/orig/';\nvar thumbpath = '/dist/media/thumb/';\nconst filetypes = [\"jpg\", \"jpeg\", \"png\", \"gif\", \"webp\"];\nconst mediafiles = fse.readdirSync(srcpath);\nconst alength = mediafiles.length;\nvar mediafile = \"\";\nvar targetfile = \"\";\n\nfor (var i=0; i<alength; i++) {\n    mediafile = mediafiles[i];\n\n    if (mediafile.includes(\".\")) {\n        targetfile = mediafile.split('.')[0];\n        if (filetypes.includes(mediafile.split('.')[1]) ) {\n            sharp(srcpath+mediafile)\n            .toFile(fullpath+targetfile+'.webp');\n            sharp(srcpath+mediafile).resize({ width: 440 })\n            .toFile(thumbpath+targetfile+'.webp');\n            fse.copySync(srcpath+mediafile, origpath+mediafile);\n        } else {\n            fse.copySync(srcpath+mediafile, origpath+mediafile);\n        }\n        \n    } else {\n        var subsrcpath = srcpath+mediafile+\"/\";\n        var subfullpath = fullpath+mediafile+\"/\";\n        var suborigpath = origpath+mediafile+\"/\";\n        var subthumbpath = thumbpath+mediafile+\"/\";\n        var submediafiles = fse.readdirSync(subsrcpath);\n        var blength = submediafiles.length;\n        await fse.mkdirSync(suborigpath);\n        await fse.mkdirSync(subfullpath);\n        await fse.mkdirSync(subthumbpath);\n        \n        for (var j=0; j<blength; j++) {\n            submediafile = submediafiles[j];\n            subtargetfile = submediafile.split('.')[0];\n            \n            if (filetypes.includes(submediafile.split('.')[1]) ) {\n                sharp(subsrcpath+submediafile)\n                .toFile(subfullpath+subtargetfile+'.webp');\n                \n                sharp(subsrcpath+submediafile).resize({ width: 440 })\n                .toFile(subthumbpath+subtargetfile+'.webp');\n                \n                fse.copySync(subsrcpath+submediafile, suborigpath+submediafile);\n                \n            } else {\n                fse.copySync(subsrcpath+submediafile, suborigpath+submediafile)\n            }\n        }\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "sharp",
+                "module": "sharp"
+            },
+            {
+                "var": "fse",
+                "module": "fs-extra"
+            }
+        ],
+        "x": 270,
+        "y": 300,
+        "wires": [
+            [
+                "ba15d81ab6aea560"
+            ]
+        ]
+    },
+    {
+        "id": "75bd13bf2a459b52",
+        "type": "function",
+        "z": "2528f7fd0f2bdf88",
+        "name": "for each snippet",
+        "func": "//var i = 1;\nvar path = \"/src/snippets/\";\nvar alength = msg.files.length;\n\nfor (var i=0; i<alength; i++) {\n    msg.filename = path+msg.files[i];\n    msg.topic = msg.files[i].split('.')[0];\n    if (i+1 == alength) {\n      msg.complete = \"done\";\n    }\n    node.send(msg);\n}\n\n/*\nmsg.files.forEach(setValue);\n\nfunction setValue(item) {\n    \n    msg.filename = path+item;\n    msg.topic = item.split('.')[0];\n    if (i === alength) {\n      msg.complete = \"done\";\n    }\n    node.send(msg);\n    i = i+1;\n}\n*/\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "083fd8b94c22f5ec",
+        "type": "function",
+        "z": "2528f7fd0f2bdf88",
+        "name": "for each post",
+        "func": "//var i=0;\nvar alength = msg.postfiles.length;\nvar path = \"/src/md/posts/\";\n\n\nfor (var i=0; i<alength; i++) {\n    msg.filename = path+msg.postfiles[i];\n    msg.topic = msg.postfiles[i].split('.')[0];\n    if (i+1 == alength) {\n      msg.complete = \"done\";\n    }\n    node.send(msg);\n}\n\n/*\n\nmsg.postfiles.forEach(setValue);\n\nfunction setValue(item) {\n    i = i+1;\n    msg.filename = path+item;\n    msg.topic = item.split('.')[0];\n    if (i == alength) {\n      msg.complete = \"done\";\n    }\n    node.send(msg);\n}\n*/\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "80ea311750a59fbb",
+        "type": "function",
+        "z": "2528f7fd0f2bdf88",
+        "name": "extract meta from posts",
+        "func": "\nvar i = 0;\nmsg.posts = [];\n\n\nObject.entries(msg.payload).forEach(([key, value]) => {\n    \n\n\n  var md = new markdownIt({\n  html: true,\n  linkify: true,\n  typographer: true,\n  breaks: true\n    }).use(markdownItFrontMatter, function(metainfo) {\n        msg.meta = JSON.parse(metainfo);\n}).use(markdownItLinkifyImages, {\n  target: '_blank',\n  linkClass: 'custom-link-class',\n  imgClass: 'custom-img-class'\n});\n    \n    \n    md = md.render(value);\n  \n  \n  msg.posts[i] = {\"file\":key,\"content\":md,\"meta\":msg.meta};\n  \n  i = i + 1;\n})\n\ndelete msg.meta;\ndelete msg.payload;\ndelete msg.filename;\ndelete msg.postfiles;\ndelete msg.topic;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "markdownIt",
+                "module": "markdown-it"
+            },
+            {
+                "var": "markdownItFrontMatter",
+                "module": "markdown-it-front-matter"
+            },
+            {
+                "var": "markdownItLinkifyImages",
+                "module": "markdown-it-linkify-images"
+            }
+        ],
+        "x": 550,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "051c355a2de1427e",
+        "type": "function",
+        "z": "2528f7fd0f2bdf88",
+        "name": "for each post",
+        "func": "var path = \"/dist/posts/\";\nvar ogmeta = \"\";\nvar ogmetalang = \"\";\nvar template = msg.payload;\n\nmsg.posts.forEach(genPost);\n\nfunction genPost(item) {\n    \n     msg.filename = path+item.file+\".html\";\n     msg.payload = template.replace(\"<!-- Post Headline -->\", item.meta.title);\n     msg.payload = msg.payload.replace(\"<!-- Post Image -->\", '<img src=\"/media/'+item.meta.imgurl+'\" class=\"img-fluid mb-2\" alt=\"postImage\">');\n     msg.payload = msg.payload.replace(\"<!-- mardown content from posts -->\", item.content);\n     msg.payload = msg.payload.replace(\"<!-- PAGE TITLE -->\",item.meta.title);\n     \n     if (item.meta.language == \"de\") {\n       ogmetalang = \"de_DE\"  \n     } else {\n         ogmetalang = \"en_US\"  \n     }\n    ogmeta = `\n    <meta property=\"og:type\" content=\"website\">\n    <meta property=\"og:locale\" content=\"`+ogmetalang+`\">\n    <meta property=\"og:site_name\" content=\"niklas-stephan.de\">\n    <link rel=\"canonical\" href=\"`+msg.baseurl+`/posts/`+item.meta.language+`/`+item.file+`.html\">\n    <meta name=\"description\" content=\"`+item.meta.excerpt+`\">\n    <meta property=\"og:title\" content=\"`+item.meta.title+`\">\n    <meta property=\"og:description\" content=\"`+item.meta.excerpt+`\">\n    <meta property=\"og:url\" content=\"`+msg.baseurl+`/posts/`+item.meta.language+`/`+item.file+`.html\">\n    <meta property=\"og:image\" content=\"`+msg.baseurl+`/media/`+item.meta.imgurl+`\">\n    <meta property=\"og:image:secure_url\" content=\"`+msg.baseurl+`/media/`+item.meta.imgurl+`\">\n    <meta name=\"twitter:card\" content=\"summary\">\n    <meta name=\"twitter:description\" content=\"`+item.meta.excerpt+`\">\n    <meta name=\"twitter:title\" content=\"`+item.meta.title+`\">\n    <meta name=\"twitter:image\" content=\"`+msg.baseurl+`/media/`+item.meta.imgurl+`\">`\n    \n     msg.payload = msg.payload.replace(\"<!-- meta tags -->\",ogmeta);\n     \n     msg.meta = item.meta;\n     \n     if (item.meta.published == true ) {\n         node.send(msg);\n     }\n     \n}\n\n\n/*\n\n */",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ca3dd9ebcc90eba6",
+        "type": "function",
+        "z": "2528f7fd0f2bdf88",
+        "name": "insert content",
+        "func": "\n//get categories from all posts and extract unique ones\nvar categories = [];\nfor (var i=0 ; i<msg.posts.length;i++) {\n    if (msg.posts[i].meta.published == true) {\n        for (var j = 0; j < msg.posts[i].meta.keywords.length; j++) {\n            categories.push(msg.posts[i].meta.keywords[j]);\n        }\n    }\n}\nvar uniqueCategories = [...new Set(categories)];\n\n// define a color to stick for each category\nconst colorcat = {};\nvar catcolors = [\"green\", \"red\", \"blue\", \"orange\", \"yellow\", \"pink\", \"purple\",\"indigo\"];\nvar c=0;\n for (const key of uniqueCategories) {\n      colorcat[key] = catcolors[c];\n      c = c+1;\n }\n       \n\n//generate and set html for categorie selection\nvar cathtml = \"\";\nfor (var k = 0; k < uniqueCategories.length; k++) {\n    \n    cathtml = cathtml + `<button data-filter=\".cat-`+uniqueCategories[k]+`\" type=\"button\" \n    onclick=\"sort()\" class=\"btn bg-` + catcolors[k] + ` c-white me-2\">` + uniqueCategories[k]+`</button>`;\n}\nmsg.payload = msg.payload.replace(\"<!-- CATEGORIES -->\", cathtml);\n\n// get card content from all posts and generate html\nvar posthtml = \"\";\nfor (var l = 0; l < msg.posts.length; l++) {\n    if (msg.posts[l].meta.published == true) {\n        \n    var link = msg.posts[l].meta.filename.slice(0, -3)+\".html\";\n    \n    //get color for current post\n    var postcolor = \"\";\n    for (const key in colorcat) {\n        if (key == msg.posts[l].meta.keywords[0]) {\n            postcolor = colorcat[key];\n        }\n    }\n    \n    posthtml = posthtml + `\n    <div class=\"col-sm-6 col-lg-4 my-4 filterDiv cat-`+msg.posts[l].meta.keywords[0]+` lang-`+ msg.posts[l].meta.language + `\">\n        <span class=\"date hidden d-none\">`+ msg.posts[l].meta.date + `</span>\n        <span class=\"name hidden d-none\">`+ msg.posts[l].meta.title + `</span>\n        <div onclick=\"goto('`+ link+ `','blog')\" class=\"card h-100 d-flex align-items-center bo-`+postcolor+`\">\n            <div class=\"card-header bg-`+ postcolor + `\">` + msg.posts[l].meta.keywords[0] + `</div>\n            <div class=\"card-img-wrapper d-flex align-items-center\">\n                <img src=\"media/`+ msg.posts[l].meta.imgurl + `\"\n                    class=\"card-img-top\" alt=\"iot\">\n            </div>\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">`+ msg.posts[l].meta.title + `</h5>\n                <p class=\"card-text\">\n                    `+ msg.posts[l].meta.excerpt + `\n                </p>\n            </div>\n        </div>\n    </div>\n    `;\n    }\n}\n\nmsg.payload = msg.payload.replace(\"<!-- POSTS -->\", posthtml);\n\nvar ogmetalang = \"de_DE\";\nvar ogmeta = `\n<meta property=\"og:type\" content=\"website\">\n<meta property=\"og:locale\" content=\"`+ogmetalang+`\">\n<meta property=\"og:site_name\" content=\"niklas-stephan.de\">\n<link rel=\"canonical\" href=\"`+msg.baseurl+`/blog.html\">\n<meta name=\"description\" content=\"Projekte und Posts aus der Welt von IoT, Musik und mehr\">\n<meta property=\"og:title\" content=\"Projects & Blog - niklas-stephan.de\">\n<meta property=\"og:description\" content=\"Projekte und Posts aus der Welt von IoT, Musik und mehr\">\n<meta property=\"og:url\" content=\"`+msg.baseurl+`/blog.html\">\n<meta property=\"og:image\" content=\"`+msg.baseurl+`/assets/img/me_logo.webp\">\n<meta property=\"og:image:secure_url\" content=\"`+msg.baseurl+`/assets/img/me_logo.webp\">\n<meta name=\"twitter:card\" content=\"summary\">\n<meta name=\"twitter:description\" content=\"Projekte und Posts aus der Welt von IoT, Musik und mehr\">\n<meta name=\"twitter:title\" content=\"Projects & Blog - niklas-stephan.de\">\n<meta name=\"twitter:image\" content=\"`+msg.baseurl+`/assets/img/me_logo.webp\">`\n\n msg.payload = msg.payload.replace(\"<!-- meta tags -->\",ogmeta);\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6a7e742a3e26b424",
+        "type": "function",
+        "z": "2528f7fd0f2bdf88",
+        "name": "generate sitemap.xml",
+        "func": "var xml = `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\">\n    <url>\n        <loc>https://niklas-stephan.de/</loc>\n        <priority>1.00</priority>\n    </url>\n    <url>\n        <loc>https://niklas-stephan.de/index.html</loc>\n        <priority>0.80</priority>\n    </url>\n    <url>\n        <loc>https://niklas-stephan.de/blog.html</loc>\n        <priority>0.80</priority>\n    </url>`\n\nmsg.posts.forEach(postxml);\n\nxml = xml + `\n</urlset>`\nmsg.payload = xml;\nreturn msg;\n\n\nfunction postxml(item) {\n     if (item.meta.published == true ) {\n        xml = xml + `\n        <url>\n            <loc>https://niklas-stephan.de/posts/de/`+item.file+`.html</loc>\n            <priority>0.64</priority>\n        </url>`\n     }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fdc2d934458a509a",
+        "type": "function",
+        "z": "2528f7fd0f2bdf88",
+        "name": "generate fulltext search index",
+        "func": "var index = \"[\";\n\nmsg.posts.forEach(genPost);\n\nmsg.payload = msg.payload.slice(0, -1);\nmsg.payload = msg.payload+\"]\";\nreturn msg;\n\nfunction genPost(item) {\n    \n   console.log(encodeURI('\\uD800\\uDFFF'));\n     \n     if (item.meta.published == true ) {\n         index = index + `{\"lang\":\"`+item.meta.language+`\",\"link\":\"/posts/`+item.file+`.html\",\"headline\":\"`+item.meta.title+`\",\"content\":\"`+item.content.replace(/[^a-zA-Z0-9]/g, ' ')+`\"},`\n         \n         msg.payload = index;\n     }\n     \n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b38ad781e985480c",
+        "type": "function",
+        "z": "2528f7fd0f2bdf88",
+        "name": "insert content",
+        "func": "var ogmetalang = \"de_DE\";\nvar ogmeta = `\n<meta property=\"og:type\" content=\"website\">\n<meta property=\"og:locale\" content=\"`+ogmetalang+`\">\n<meta property=\"og:site_name\" content=\"niklas-stephan.de\">\n<link rel=\"canonical\" href=\"`+msg.baseurl+`/index.html\">\n<meta name=\"description\" content=\"Projekte und Posts aus der Welt von IoT, Musik und mehr\">\n<meta property=\"og:title\" content=\"Projects & Blog - niklas-stephan.de\">\n<meta property=\"og:description\" content=\"Projekte und Posts aus der Welt von IoT, Musik und mehr\">\n<meta property=\"og:url\" content=\"`+msg.baseurl+`/index.html\">\n<meta property=\"og:image\" content=\"`+msg.baseurl+`/assets/img/me_logo.webp\">\n<meta property=\"og:image:secure_url\" content=\"`+msg.baseurl+`/assets/img/me_logo.webp\">\n<meta name=\"twitter:card\" content=\"summary\">\n<meta name=\"twitter:description\" content=\"Projekte und Posts aus der Welt von IoT, Musik und mehr\">\n<meta name=\"twitter:title\" content=\"Projects & Blog - niklas-stephan.de\">\n<meta name=\"twitter:image\" content=\"`+msg.baseurl+`/assets/img/me_logo.webp\">`\n\nmsg.payload = msg.payload.replace(\"<!-- meta tags -->\",ogmeta);\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6ceddeeef4979169",
+        "type": "function",
+        "z": "2528f7fd0f2bdf88",
+        "name": "finish deployment",
+        "func": "var endtime = Date.now();\nvar duration = endtime-msg.starttime;\nlet yourDate = new Date()\nvar depdate = yourDate.toISOString().split('T')[0]\n\nmsg.payload = \"Deployment duration: \"+duration+\" ms \\n\";\nmsg.payload = msg.payload+\"Deployment date: \"+depdate;\nmsg.statusCode = 200;\n\n\nif (msg.type != \"manual\") {\n    return msg;\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    }
+]
