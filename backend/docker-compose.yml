@@ -22,7 +22,3 @@ services:
 networks:
   dmz:
     external: true
-volumes:
-  ncms-data:
-#docker exec -u 0 -it ncms bash
-#curl -X POST -d 'key=3433#fjkK' https://ncms.niklas-stephan.de/deploy
