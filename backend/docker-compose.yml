@@ -1,0 +1,28 @@
+version: "3.0"
+services:
+  ncms:
+    container_name: ncms
+    hostname: ncms
+    image: nodered/node-red:latest
+    restart: always
+    environment:
+      - TZ=Europe/Berlin
+    networks:
+      - dmz
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./data:/data
+      - ./dist:/dist:rw
+      - ./src:/src:rw
+      - ../proxy.handtrixxx.com/static:/static
+      - /etc/localtime:/etc/localtime:ro
+networks:
+  dmz:
+    external: true
+volumes:
+  ncms-data:
+#docker exec -u 0 -it ncms bash
+#curl -X POST -d 'key=3433#fjkK' https://ncms.niklas-stephan.de/deploy

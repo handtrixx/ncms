@@ -4,19 +4,28 @@ or Node-Red Content Managment System, or Not-Another Content Management System.
 
 ![ncms_logo](https://niklas-stephan.de/media/full/ncms/ncms_logo.webp)
 
-The flat-file and node-red based WCMS created for Niklas Stephan's Website. 
+The flat-file and Node Red based WCMS created for Niklas Stephan's Website. 
+It also is a static site generator to provide frontend files to a a Webserver of your choice, e.g. nginx.
 
 Link Frontend: https://niklas-stephan.de
 
 Link Github: https://github.com/handtrixx/ncms 
 
+## Installation
+There is no one click installation (version 1.0) available and maybe there never will be.
+Instead you setup Node-Red, in best case in a docker environment (example: docker-compose.yml in /backend).
+Then you import the flow which also can be found at /backend/flows.json.
+
 ## Version
-version 0.62
+version 0.63
 
 ## Version Log & Features Included
 
+version 0.63
+- Included docker compose file at /src/backend/docker-compose.yml as an example config
+
 version 0.62
-- Included automated copy of latest Node-Red flow to /src/nodered/flows.json 
+- Included automated copy of latest Node-Red flow to /src/backend/flows.json 
 
 version 0.61
 - Translataion of categories by id and new langval data attribute
