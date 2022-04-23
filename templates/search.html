@@ -10,7 +10,7 @@
         <section id="content">
             <div class="container-lg" >
                 <div class="row pt-4 ">
-                    <div class="col-12 mt-5 pt-5 text-center">
+                    <div class="col-12 mt-5 text-center">
                         <h1 class="c-white langkey" id="search_headline">
                             Suchen & Finden
                         </h1>
@@ -29,15 +29,15 @@
                 </div>
 
 
-                <div class="row">
-                    <div class="col-12 col-md-2"></div>
-                    <div class="col-12 col-md-8">
-                        <ol id="searchrresults" class="list-group list-group-numbered">
+                <div class="row pb-5">
+                  
+                    <div class="col-12 ">
+                        <ul id="searchrresults" class="list-group">
                           
                            
-                          </ol>
+                          </ul>
                     </div>
-                    <div class="col-12 col-md-2"></div>
+            
                 </div>
             </div>
             </div>
@@ -51,14 +51,7 @@
     <!-- Javascript from script.html snipppet -->
    
 <script>
-var input = document.getElementById("searchInput");
-input.addEventListener("keyup", function(event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    document.getElementById("button-search").click();
-  }
-});
-
+searchKeyLogger();
 </script>
 </body>
 

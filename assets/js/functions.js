@@ -190,6 +190,8 @@ function search() {
             var postlang = json[i].lang;
             var head = json[i].headline.toLowerCase();
             var content = json[i].content.toLowerCase();
+            var link = json[i].link.toLowerCase();
+            
             if (postlang == lang) {
                 if (head.search(searchInput) > -1) {
                     results.push(i);
@@ -197,6 +199,11 @@ function search() {
                 if (content.search(searchInput) > -1) {
                     results.push(i);
                 }
+                
+            }
+            if (link.search(searchInput) > -1) {
+               
+                results.push(i);
             }
 
         }
@@ -208,10 +215,12 @@ function search() {
                 var position = json[uniqueResults[j]].content.toLowerCase().search(searchInput);
                 resulthtml = resulthtml + `
                 <li class="list-group-item d-flex align-items-start">
-                <a href="`+json[uniqueResults[j]].link+`">
+                <a href="`+json[uniqueResults[j]].link+`?lang=`+json[uniqueResults[j]].lang+`">
                     <div class="ms-2 me-auto">
-                    <div class="fw-bold">`+json[uniqueResults[j]].headline+`</div>
-                    ...`+json[uniqueResults[j]].content.substring(position, position+100)+`...
+                    <div class="fw-bold">`+json[uniqueResults[j]].headline+` <span class="badge bg-secondary">
+                    `+json[uniqueResults[j]].lang+`
+                    </span> </div>
+                    `+json[uniqueResults[j]].content.substring(position, position+100)+`...
                     </div>
                 </a>
                 </li>
@@ -368,6 +377,32 @@ function postdateConvert() {
     document.getElementById("postdate").innerHTML = outputdate;
 }
 
+function errorpage() {
+    const currentUrl = window.location.pathname;
+    if (currentUrl.substring(0, 7) == "/posts/") {
+        let postUrl = currentUrl.substring(7);
+        if (postUrl.endsWith("_en.html")) {
+            let searchUrl = postUrl.replace("_en.html", "");
+     
+            document.getElementById("searchInput").value = searchUrl;
+            document.getElementById("button-search").click();
+        
+        }
+    }
+}
+
+function searchKeyLogger() {
+    var input = document.getElementById("searchInput");
+    input.addEventListener("keyup", function(event) {
+  
+      if (event.keyCode === 13 || input.value.length > 2) {
+        event.preventDefault();
+        document.getElementById("button-search").click();
+      }
+    });
+
+    
+}
 
 
 

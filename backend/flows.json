@@ -223,12 +223,17 @@
         "type": "function",
         "z": "87631f97363e48c7",
         "name": "create search index.json",
-        "func": "var alength = msg.posts.length;\nvar index = \"[\";\n\nfor (var i=0; i<alength; i++) {\n    index = index+`{\"lang\":\"`+msg.posts[i].language+`\",\"link\":\"/posts/`+msg.posts[i].distFilename+`\",\"headline\":\"`+msg.posts[i].title+`\",\"content\":\"`+msg.posts[i].distContent.replace(/[^a-zA-Z0-9]/g, ' ')+`\"},`;\n}\nindex = index.slice(0, -1);\nindex = index+\"]\";\n\nmsg.dist.searchindex = index;\n\nreturn msg;\n",
+        "func": "var alength = msg.posts.length;\nvar content =\"\";\nvar index = \"[\";\n\nfor (var i=0; i<alength; i++) {\n    \n    content = textversionjs(msg.posts[i].distContent);\n    content = content.replace(/[^a-zA-Z0-9]/g, ' ')\n\n    index = index+`{\"lang\":\"`+msg.posts[i].language+`\",\"link\":\"/posts/`+msg.posts[i].distFilename+`\",\"headline\":\"`+msg.posts[i].title+`\",\"content\":\"`+content+`\"},`;\n}\nindex = index.slice(0, -1);\nindex = index+\"]\";\n\nmsg.dist.searchindex = index;\n\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "libs": [],
+        "libs": [
+            {
+                "var": "textversionjs",
+                "module": "textversionjs"
+            }
+        ],
         "x": 150,
         "y": 220,
         "wires": [
@@ -242,7 +247,7 @@
         "type": "function",
         "z": "87631f97363e48c7",
         "name": "write files",
-        "func": "await fse.emptyDir('/dist').then(() => {\n    fse.mkdirSync('/dist/media');\n    fse.mkdirSync('/dist/media/full');\n    fse.mkdirSync('/dist/media/orig');\n    fse.mkdirSync('/dist/media/thumb');\n    fse.mkdirSync('/dist/posts');\n});\n\nawait fse.copySync('/src/assets/', '/dist/assets/');\nawait fse.copySync('/src/templates/robots.txt', '/dist/robots.txt');\nawait fse.copySync('/data/flows.json', '/src/nodered/flows.json');\n\nawait fse.writeFileSync('/dist/index.html', msg.dist.index);\nawait fse.writeFileSync('/dist/blog.html', msg.dist.blog);\nawait fse.writeFileSync('/dist/404.html', msg.dist.errorpage);\nawait fse.writeFileSync('/dist/privacy-policy.html', msg.dist.privacy);\nawait fse.writeFileSync('/dist/search.html', msg.dist.search);\nawait fse.writeFileSync('/dist/sitemap.xml', msg.dist.sitemap);\nawait fse.writeFileSync('/dist/searchindex.json', msg.dist.searchindex);\n\nconst postfilefolder = \"/dist/posts/\"\n\nawait Object.entries(msg.dist.posts).forEach(item => {\n  var [key, value] = item;\n  fse.writeFileSync(postfilefolder+key, value)\n});\n\nreturn msg;",
+        "func": "await fse.emptyDir('/dist').then(() => {\n    fse.mkdirSync('/dist/media');\n    fse.mkdirSync('/dist/media/full');\n    fse.mkdirSync('/dist/media/orig');\n    fse.mkdirSync('/dist/media/thumb');\n    fse.mkdirSync('/dist/posts');\n});\n\nawait fse.copySync('/src/assets/', '/dist/assets/');\nawait fse.copySync('/src/templates/robots.txt', '/dist/robots.txt');\nawait fse.copySync('/data/flows.json', '/src/backend/flows.json');\n\nawait fse.writeFileSync('/dist/index.html', msg.dist.index);\nawait fse.writeFileSync('/dist/blog.html', msg.dist.blog);\nawait fse.writeFileSync('/dist/404.html', msg.dist.errorpage);\nawait fse.writeFileSync('/dist/privacy-policy.html', msg.dist.privacy);\nawait fse.writeFileSync('/dist/search.html', msg.dist.search);\nawait fse.writeFileSync('/dist/sitemap.xml', msg.dist.sitemap);\nawait fse.writeFileSync('/dist/searchindex.json', msg.dist.searchindex);\n\nconst postfilefolder = \"/dist/posts/\"\n\nawait Object.entries(msg.dist.posts).forEach(item => {\n  var [key, value] = item;\n  fse.writeFileSync(postfilefolder+key, value)\n});\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",

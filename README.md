@@ -17,9 +17,16 @@ Instead you setup Node-Red, in best case in a docker environment (example: docke
 Then you import the flow which also can be found at /backend/flows.json.
 
 ## Version
-version 0.64
+version 0.67
 
 ## Version Log & Features Included
+
+version 0.67
+- Optimized Search & Error Page Handling
+- Translated/Migrated content from Old Website
+
+version 0.65
+- Type Ahead Search and integrated search in 404 page.
 
 version 0.64
 - Included docker compose file at /src/backend/docker-compose.yml as an example config
@@ -152,5 +159,3 @@ version 0.01
 ## Todo's
 - Optional CMS backend for frontend editing
 - More Dynamic Page Titles
-- Translate posts from old website
-- if posts only exists in 1 language: show info instead of 404 error

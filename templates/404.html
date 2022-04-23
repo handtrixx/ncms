@@ -11,13 +11,33 @@
         <section id="content" class="d-flex align-items-center justify-content-center text-center pb-5">
             <div class="container-lg pb-5">
                 <div class="row ">
-                    <div class="col-12 mt-5 pt-5">
+                    <div class="col-12 mt-5">
                         <h1 class="c-white langkey display-1" id="404">404</h1>
                         <p class="langkey" id="404_content">Ups, da hat etwas nicht geklappt, die gewünschte Seite ist entweder nicht vefügbar oder noch ncicht in Deine Sprache übersetzt worden.</p>
-                        <p class="langkey" id="404_links">
-                            Wenn du einen bestimmten Inhalt finden möchtest, probier doch gerne mal <a href='/search.html'>die Volltextsuche hier</a> aus.
-                        </p>
                     </div>
+                </div>
+                <div class="row text-start">
+                    <div class="col-12 col-md-2"></div>
+                    <div class="col-12 col-md-8 py-5 text-center">
+                        <div class="input-group input-group-lg mb-3">
+                            <input id="searchInput" type="text" class="form-control" placeholder="" aria-label="Search Term" aria-describedby="button-search">
+                            <button onclick="search()" class="btn btn-outline-primary" type="button" id="button-search">Start!</button>
+                          </div>
+                    </div>
+                    <div class="col-12 col-md-2"></div>
+                   
+                </div>
+
+
+                <div class="row text-start">
+                 
+                    <div class="col-12">
+                        <ul id="searchrresults" class="list-group">
+                          
+                           
+                          </ul>
+                    </div>
+                    <div class="col-12"></div>
                 </div>
             </div>
         </section>
@@ -28,6 +48,11 @@
 
 
     <!-- Javascript from script.html snipppet -->
+
+    <script>
+        searchKeyLogger();
+        errorpage();
+    </script>
 
 </body>
 
