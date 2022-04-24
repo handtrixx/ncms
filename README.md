@@ -13,13 +13,16 @@ Link Github: https://github.com/handtrixx/ncms
 
 ## Installation
 There is no one click installation (version 1.0) available and maybe there never will be.
-Instead you setup Node-Red, in best case in a docker environment (example: docker-compose.yml in /backend).
+Instead you setup Node-Red, in best case in a docker environment. You can find example docker-compose.yml in folder /backend in this project.
 Then you import the flow which also can be found at /backend/flows.json.
 
 ## Version
-version 0.67
+version 0.68
 
 ## Version Log & Features Included
+
+version 0.68
+- Bugfixing
 
 version 0.67
 - Optimized Search & Error Page Handling

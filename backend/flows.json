@@ -223,7 +223,7 @@
         "type": "function",
         "z": "87631f97363e48c7",
         "name": "create search index.json",
-        "func": "var alength = msg.posts.length;\nvar content =\"\";\nvar index = \"[\";\n\nfor (var i=0; i<alength; i++) {\n    \n    content = textversionjs(msg.posts[i].distContent);\n    content = content.replace(/[^a-zA-Z0-9]/g, ' ')\n\n    index = index+`{\"lang\":\"`+msg.posts[i].language+`\",\"link\":\"/posts/`+msg.posts[i].distFilename+`\",\"headline\":\"`+msg.posts[i].title+`\",\"content\":\"`+content+`\"},`;\n}\nindex = index.slice(0, -1);\nindex = index+\"]\";\n\nmsg.dist.searchindex = index;\n\nreturn msg;\n",
+        "func": "var alength = msg.posts.length;\nvar content =\"\";\nvar index = \"[\";\n\nfor (var i=0; i<alength; i++) {\n    \n    content = textversionjs(msg.posts[i].distContent);\n    content = content.replace(/[^a-zA-Z0-9]/g, ' ');\n\n    index = index+`{\"lang\":\"`+msg.posts[i].language+`\",\"link\":\"/posts/`+msg.posts[i].distFilename+`\",\"headline\":\"`+msg.posts[i].title+`\",\"content\":\"`+content+`\"},`;\n}\nindex = index.slice(0, -1);\nindex = index+\"]\";\n\nmsg.dist.searchindex = index;\n\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",

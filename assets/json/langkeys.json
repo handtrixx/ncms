@@ -208,7 +208,18 @@
     "id":"cat-Alle",
     "deval":"Alle",
     "enval":"All"
+},
+{
+    "id":"404_didyou",
+    "deval":"Meintest du vielleicht:",
+    "enval":"Did you mean:"
+},
+{
+    "id":"404_searchlink",
+    "deval":"Zur Suche",
+    "enval":"Go To Search"
 }
+
 ]
 
 
